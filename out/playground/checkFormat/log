@@ -1,0 +1,11 @@
+Checking format of 10 Scala sources
+DanglingParentheses: top-level presets deprecated; use 'preset' subsection
+parsed config (v2.6.4): /home/wataru/Desktop/ysyx-workbench/npc/.scalafmt.conf
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/RF.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/core.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Mem.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/dpi.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Bus/IO.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/constant/Inst.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/constant/Consts.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Elaborate.scala

@@ -1,0 +1,13 @@
+import chisel3._
+import Core._
+object Main {
+  def main(args:Array[String]) : Unit = {
+//    println("hello,world!")
+    println("compile the circuit of the CORE to verilog/system verilog .\n" + "WATARU")
+
+    chisel3.Driver.execute(args,() => new core)
+    println("compile successful!!!")
+
+
+  }
+}

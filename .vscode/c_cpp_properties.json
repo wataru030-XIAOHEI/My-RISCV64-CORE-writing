@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/wataru/Documents/verilator/include",
+                "/home/wataru/Documents/verilator/**",
+                "/home/wataru/Documents/verilator/src",
+                "${workspaceFolder}/src/csrc/**",
+                "${workspaceFolder}/src/csrc/memory/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}

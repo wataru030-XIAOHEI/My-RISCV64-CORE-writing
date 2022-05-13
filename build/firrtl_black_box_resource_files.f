@@ -1,0 +1,1 @@
+/home/wataru/Desktop/ysyx-workbench/npc/build/dpi.v

@@ -1,0 +1,1 @@
+{"name":"mill-bsp","argv":["/home/wataru/.cache/mill/download/0.9.8","-i","--disable-ticker","--color","false","mill.bsp.BSP/start"],"millVersion":"0.9.8","bspVersion":"2.0.0","languages":["scala","java"]}

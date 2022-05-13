@@ -1,0 +1,18 @@
+{
+    "value": [
+        "ref:8e132380:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/RF.scala",
+        "ref:b9801e53:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/core.scala",
+        "ref:a12b611f:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Ctrl.scala",
+        "ref:7bc6fbea:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Mem.scala",
+        "ref:413ab3bc:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/pipeline.scala",
+        "ref:a284681f:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/GCD.scala",
+        "ref:a776ff69:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Bus/IO.scala",
+        "ref:90a1418f:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/constant/Inst.scala",
+        "ref:eb2625b4:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/constant/Consts.scala",
+        "ref:5ccd20bf:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/DecoupledGCD.scala",
+        "ref:295ea33d:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/utils/dpi.scala",
+        "ref:83fdcd18:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Elaborate.scala"
+    ],
+    "valueHash": 619281835,
+    "inputsHash": -1151247362
+}

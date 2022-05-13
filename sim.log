@@ -1,0 +1,5 @@
+runing simulation for test module 
+verilator -cc --exe --build --trace  ./src/csrc/utils.cpp ./src/csrc/sim_main.cpp ./src/vsrc/core.v
+make[1]: Entering directory '/home/wataru/Desktop/ysyx-workbench/npc/obj_dir'
+g++    sim_main.o utils.o verilated.o verilated_vcd_c.o Vcore__ALL.a      -o Vcore
+make[1]: Leaving directory '/home/wataru/Desktop/ysyx-workbench/npc/obj_dir'
