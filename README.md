@@ -4,17 +4,19 @@
 这是我的rv64 CPU ， 该项目使用verilator仿真器进行仿真，并根据ysyx使用nemu与am来进行模拟实现cpu。
 其目录组成如下：
 _______________
-├── build		#build目录
-├── build.sc		#构建选项
-├── Makefile		#Makefile
-├── obj_dir		#verilator生成的文件
-├── out			#mill工具
-├── playground		#chisel代码工作区
-├── README.md		#README
-├── sim.log
-├── src			#仿真环境与verilog代码 ， csrc：c++仿真环境， vsrc：verilog代码 即DUT
-├── test_run_dir
-└── wave		#gtk波形文件存放地
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         2022/4/19     17:25                .bsp
+d-----         2022/4/12     16:20                .github
+d-----          2022/5/6     17:05                .vscode
+d-----          2022/5/6     22:10                build       //生成的v代码
+d-----         2022/5/13     22:49                doc
+d-----         2022/5/13     22:23                obj_dir	//verilator生成的文件
+d-----         2022/4/12     16:45                out
+d-----         2022/4/12     16:20                playground	//scala工作区
+d-----         2022/5/13     22:18                src				//仿真环境与DUT
+d-----          2022/5/1     21:32                test_run_dir
+d-----         2022/5/13     20:32                wave		//波形文件
 
 ## 目前工作
 * 五级流水线初步搭建成功 ，无阻塞控制！！！！所以跳转是肯定不正确的！！！
