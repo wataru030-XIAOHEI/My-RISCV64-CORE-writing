@@ -26,6 +26,7 @@ d-----         2022/5/13     20:32                wave
 
 ## 目前结构
 
-![](G:/VM_OS/ubuntu/ubuntu_vm/share_files/gitee/npc/doc/pic/image-20220513144544795-16524243467541.png)
+![前半部分](./doc/pic/image-20220513144544795-16524243467541.png)
 
-![](G:/VM_OS/ubuntu/ubuntu_vm/share_files/gitee/npc/doc/pic/image-20220513144558112.png)
+![后半部分](./doc/pic/image-20220513144558112.png)
+
