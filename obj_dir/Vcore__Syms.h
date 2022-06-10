@@ -11,28 +11,28 @@
 
 // INCLUDE MODEL CLASS
 
-#include "Vcore.h"
+#include "VCore.h"
 
 // INCLUDE MODULE CLASSES
-#include "Vcore___024root.h"
+#include "VCore___024root.h"
 
 // DPI TYPES for DPI Export callbacks (Internal use)
 
 // SYMS CLASS (contains all model state)
-class Vcore__Syms final : public VerilatedSyms {
+class VCore__Syms final : public VerilatedSyms {
   public:
     // INTERNAL STATE
-    Vcore* const __Vm_modelp;
+    VCore* const __Vm_modelp;
     bool __Vm_activity = false;  ///< Used by trace routines to determine change occurred
     uint32_t __Vm_baseCode = 0;  ///< Used by trace routines when tracing multiple models
     bool __Vm_didInit = false;
 
     // MODULE INSTANCE STATE
-    Vcore___024root                TOP;
+    VCore___024root                TOP;
 
     // CONSTRUCTORS
-    Vcore__Syms(VerilatedContext* contextp, const char* namep, Vcore* modelp);
-    ~Vcore__Syms();
+    VCore__Syms(VerilatedContext* contextp, const char* namep, VCore* modelp);
+    ~VCore__Syms();
 
     // METHODS
     const char* name() { return TOP.name(); }

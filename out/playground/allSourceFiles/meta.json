@@ -1,18 +1,19 @@
 {
     "value": [
-        "ref:8e132380:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/RF.scala",
-        "ref:b9801e53:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/core.scala",
-        "ref:a12b611f:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Ctrl.scala",
-        "ref:7bc6fbea:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Mem.scala",
-        "ref:413ab3bc:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/pipeline.scala",
+        "ref:eca83402:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Alu.scala",
+        "ref:51495da1:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Core.scala",
+        "ref:82d5fac1:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Bru.scala",
+        "ref:a1c2bf73:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Decoder.scala",
+        "ref:5b05ac72:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/rf.scala",
+        "ref:0b3e23ec:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Compents/dpi.scala",
+        "ref:9ed2a442:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Compents/PortBus.scala",
+        "ref:09c49d5e:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Const/Inst.scala",
+        "ref:a038d582:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Const/Consts.scala",
+        "ref:4ca0bc6c:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Config/Config.scala",
         "ref:a284681f:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/GCD.scala",
-        "ref:a776ff69:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Bus/IO.scala",
-        "ref:90a1418f:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/constant/Inst.scala",
-        "ref:eb2625b4:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/constant/Consts.scala",
         "ref:5ccd20bf:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/DecoupledGCD.scala",
-        "ref:295ea33d:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/utils/dpi.scala",
-        "ref:83fdcd18:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Elaborate.scala"
+        "ref:306769cb:/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Elaborate.scala"
     ],
-    "valueHash": 619281835,
-    "inputsHash": -1151247362
+    "valueHash": -185850313,
+    "inputsHash": 1569008710
 }

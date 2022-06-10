@@ -1,11 +1,5 @@
 [
   {
-    "class":"firrtl.transforms.BlackBoxInlineAnno",
-    "target":"core.dpi",
-    "name":"dpi.v",
-    "text":"\nmodule dpi (input [31:0] inst_in);\nimport \"DPI-C\" function bit is_ebreak(input int inst);\nalways @(*) begin\n   if(is_ebreak(inst_in) == 1)begin\n       $display(\"\\n\\33[1;34mebreak! inst : 0x%016h\",inst_in);\n       $display(\"\\33[0m\\n\");\n       $finish;\n   end else begin\n \n   end   \n   end\nendmodule\n            "
-  },
-  {
     "class":"firrtl.EmitCircuitAnnotation",
     "emitter":"firrtl.VerilogEmitter"
   },
