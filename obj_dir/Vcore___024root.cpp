@@ -1,9 +1,9 @@
 // Verilated -*- C++ -*-
 // DESCRIPTION: Verilator output: Design implementation internals
-// See Vcore.h for the primary calling header
+// See VCore.h for the primary calling header
 
-#include "Vcore___024root.h"
-#include "Vcore__Syms.h"
+#include "VCore___024root.h"
+#include "VCore__Syms.h"
 
 #include "verilated_dpi.h"
 
@@ -11,8 +11,8 @@
 
 extern "C" svBit is_ebreak(int inst);
 
-VL_INLINE_OPT void Vcore___024root____Vdpiimwrap_core__DOT__dpi__DOT__is_ebreak_TOP(IData/*31:0*/ inst, CData/*0:0*/ &is_ebreak__Vfuncrtn) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcore___024root____Vdpiimwrap_core__DOT__dpi__DOT__is_ebreak_TOP\n"); );
+VL_INLINE_OPT void VCore___024root____Vdpiimwrap_Core__DOT__dpi__DOT__is_ebreak_TOP(IData/*31:0*/ inst, CData/*0:0*/ &is_ebreak__Vfuncrtn) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VCore___024root____Vdpiimwrap_Core__DOT__dpi__DOT__is_ebreak_TOP\n"); );
     // Body
     int inst__Vcvt;
     for (size_t inst__Vidx = 0; inst__Vidx < 1; ++inst__Vidx) inst__Vcvt = inst;
@@ -21,618 +21,798 @@ VL_INLINE_OPT void Vcore___024root____Vdpiimwrap_core__DOT__dpi__DOT__is_ebreak_
     is_ebreak__Vfuncrtn = (1U & is_ebreak__Vfuncrtn__Vcvt);
 }
 
-VL_INLINE_OPT void Vcore___024root___sequent__TOP__1(Vcore___024root* vlSelf) {
+VL_INLINE_OPT void VCore___024root___sequent__TOP__2(VCore___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vcore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcore___024root___sequent__TOP__1\n"); );
+    VCore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VCore___024root___sequent__TOP__2\n"); );
     // Variables
-    CData/*4:0*/ __Vdlyvdim0__core__DOT__rf__DOT__rfR__v0;
-    CData/*0:0*/ __Vdlyvset__core__DOT__rf__DOT__rfR__v0;
-    VlWide<3>/*95:0*/ __Vtemp1;
-    VlWide<3>/*95:0*/ __Vtemp2;
-    VlWide<3>/*95:0*/ __Vtemp4;
-    QData/*63:0*/ core__DOT___alu_out_T_7;
-    QData/*63:0*/ __Vdly__core__DOT__pc_reg;
-    QData/*63:0*/ __Vdlyvval__core__DOT__rf__DOT__rfR__v0;
+    CData/*4:0*/ __Vdlyvdim0__Core__DOT__gpr__v0;
+    CData/*0:0*/ __Vdlyvset__Core__DOT__gpr__v0;
+    QData/*63:0*/ __Vdly__Core__DOT__pcreg;
+    QData/*63:0*/ __Vdlyvval__Core__DOT__gpr__v0;
     // Body
-    __Vdlyvset__core__DOT__rf__DOT__rfR__v0 = 0U;
-    __Vdly__core__DOT__pc_reg = vlSelf->core__DOT__pc_reg;
-    vlSelf->core__DOT__ImemCenR = (1U & (~ (IData)(vlSelf->reset)));
-    vlSelf->core__DOT__ex_mem_pl__DOT__Dmem_wdataR 
-        = ((IData)(vlSelf->reset) ? 0ULL : vlSelf->core__DOT__id_ex_pl__DOT__Dmem_wdataR);
-    vlSelf->core__DOT__ex_mem_pl__DOT__mem_wenR = (
-                                                   (~ (IData)(vlSelf->reset)) 
-                                                   & (IData)(vlSelf->core__DOT__id_ex_pl__DOT__memwenR));
+    __Vdly__Core__DOT__pcreg = vlSelf->Core__DOT__pcreg;
+    __Vdlyvset__Core__DOT__gpr__v0 = 0U;
     if (vlSelf->reset) {
-        vlSelf->core__DOT__mem_wb_pl__DOT__pcR = 0ULL;
-        vlSelf->core__DOT__mem_wb_pl__DOT__pcplus4R = 0ULL;
-        vlSelf->core__DOT__mem_wb_pl__DOT__instR = 0U;
-        vlSelf->core__DOT__mem_wb_pl__DOT__aluR = 0ULL;
+        vlSelf->Core__DOT__storeDataMem = 0ULL;
+        vlSelf->Core__DOT__pcWb = 0ULL;
     } else {
-        vlSelf->core__DOT__mem_wb_pl__DOT__pcR = vlSelf->core__DOT__ex_mem_pl__DOT__pcR;
-        vlSelf->core__DOT__mem_wb_pl__DOT__pcplus4R 
-            = (4ULL + vlSelf->core__DOT__ex_mem_pl__DOT__pcR);
-        vlSelf->core__DOT__mem_wb_pl__DOT__instR = vlSelf->core__DOT__ex_mem_pl__DOT__instR;
-        vlSelf->core__DOT__mem_wb_pl__DOT__aluR = vlSelf->core__DOT__ex_mem_pl__DOT__alu_outR;
+        vlSelf->Core__DOT__storeDataMem = vlSelf->Core__DOT__exStoreData;
+        vlSelf->Core__DOT__pcWb = vlSelf->Core__DOT__pcMem;
     }
-    if (((IData)(vlSelf->core__DOT__mem_wb_pl__DOT__rf_wenR) 
-         & (0U != (IData)(vlSelf->core__DOT__mem_wb_pl__DOT__wb_addrR)))) {
-        __Vdlyvval__core__DOT__rf__DOT__rfR__v0 = (
+    vlSelf->Core__DOT__ctrlSigsMem_memcen = ((~ (IData)(vlSelf->reset)) 
+                                             & (IData)(vlSelf->Core__DOT__exCtrlSigs_memcen));
+    if (vlSelf->reset) {
+        vlSelf->Core__DOT__ctrlSigsMem_memwen = 0U;
+        vlSelf->Core__DOT__instWb = 0x13U;
+    } else {
+        vlSelf->Core__DOT__ctrlSigsMem_memwen = vlSelf->Core__DOT__exCtrlSigs_memwen;
+        vlSelf->Core__DOT__instWb = vlSelf->Core__DOT__instMem;
+    }
+    if (vlSelf->reset) {
+        __Vdly__Core__DOT__pcreg = 0x80000000ULL;
+    } else if (vlSelf->Core__DOT__cenreg) {
+        if ((1U & (~ (IData)(vlSelf->Core__DOT__load_stall)))) {
+            __Vdly__Core__DOT__pcreg = ((IData)(vlSelf->Core__DOT__branchBus_flag)
+                                         ? ((0x67U 
+                                             == (0x707fU 
+                                                 & vlSelf->Core__DOT__If2IdInst))
+                                             ? (0xfffffffffffffffeULL 
+                                                & (vlSelf->Core__DOT___opVec_0_T 
+                                                   + vlSelf->Core__DOT___opVec_1_T_1))
+                                             : (vlSelf->Core__DOT__If2IdPc 
+                                                + vlSelf->Core__DOT___opVec_1_T_1))
+                                         : vlSelf->Core__DOT__seq_pc);
+        }
+    }
+    if (vlSelf->reset) {
+        vlSelf->Core__DOT__exOpVec_1 = 0ULL;
+        vlSelf->Core__DOT__exCtrlSigs_excTy = 1U;
+    } else {
+        vlSelf->Core__DOT__exOpVec_1 = ((IData)(vlSelf->Core__DOT__load_stall)
+                                         ? 0ULL : (
                                                    (3U 
-                                                    == (IData)(vlSelf->core__DOT__mem_wb_pl__DOT__wb_selR))
-                                                    ? vlSelf->core__DOT__mem_wb_pl__DOT__Dmem_rdataR
-                                                    : vlSelf->core__DOT___wb_data_T_3);
-        __Vdlyvset__core__DOT__rf__DOT__rfR__v0 = 1U;
-        __Vdlyvdim0__core__DOT__rf__DOT__rfR__v0 = vlSelf->core__DOT__mem_wb_pl__DOT__wb_addrR;
-    }
-    __Vdly__core__DOT__pc_reg = ((IData)(vlSelf->io_Imemio_cen)
-                                  ? ((IData)(vlSelf->core__DOT__id_ex_pl__DOT__inst_is_j_flagR)
-                                      ? ((IData)(vlSelf->core__DOT__id_ex_pl__DOT__inst_is_j_flagR)
-                                          ? ((5U == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                              ? vlSelf->core__DOT___alu_out_T_10
-                                              : vlSelf->core__DOT___alu_out_T_20)
-                                          : 0ULL) : 
-                                     ((1U & ((0xfU 
-                                              == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                              ? (IData)(vlSelf->core__DOT___hi_T_11)
-                                              : ((0x10U 
-                                                  == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                                  ? 
-                                                 (~ (IData)(vlSelf->core__DOT___hi_T_11))
-                                                  : 
-                                                 ((0xeU 
-                                                   == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                                   ? 
-                                                  VL_GTES_IQQ(1,64,64, vlSelf->core__DOT__id_ex_pl__DOT__src1R, vlSelf->core__DOT__id_ex_pl__DOT__src2R)
-                                                   : 
-                                                  ((0xdU 
-                                                    == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                                    ? 
-                                                   VL_LTS_IQQ(1,64,64, vlSelf->core__DOT__id_ex_pl__DOT__src1R, vlSelf->core__DOT__id_ex_pl__DOT__src2R)
+                                                    == (IData)(vlSelf->Core__DOT__ctriSigs_deco_3))
+                                                    ? 0ULL
                                                     : 
-                                                   ((0xcU 
-                                                     == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                                     ? 
-                                                    (vlSelf->core__DOT__id_ex_pl__DOT__src1R 
-                                                     != vlSelf->core__DOT__id_ex_pl__DOT__src2R)
-                                                     : 
-                                                    ((0xbU 
-                                                      == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR)) 
-                                                     & (vlSelf->core__DOT__id_ex_pl__DOT__src1R 
-                                                        == vlSelf->core__DOT__id_ex_pl__DOT__src2R))))))))
-                                       ? (vlSelf->core__DOT__id_ex_pl__DOT__pcR 
-                                          + vlSelf->core__DOT__id_ex_pl__DOT__immR)
-                                       : vlSelf->core__DOT__pc_plus4))
-                                  : 0x80000000ULL);
-    vlSelf->io_Imemio_cen = vlSelf->core__DOT__ImemCenR;
-    vlSelf->io_DMemio_wdata = vlSelf->core__DOT__ex_mem_pl__DOT__Dmem_wdataR;
-    vlSelf->core__DOT__id_ex_pl__DOT__Dmem_wdataR = 
-        ((IData)(vlSelf->reset) ? 0ULL : vlSelf->core__DOT__rf_io_channel_rdata2);
-    vlSelf->io_DMemio_wen = vlSelf->core__DOT__ex_mem_pl__DOT__mem_wenR;
-    vlSelf->core__DOT__id_ex_pl__DOT__memwenR = ((~ (IData)(vlSelf->reset)) 
-                                                 & ((0x13U 
-                                                     != 
-                                                     (0x707fU 
-                                                      & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                    & ((0x33U 
-                                                        != 
-                                                        (0xfe00707fU 
-                                                         & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                       & ((0x40000033U 
-                                                           != 
-                                                           (0xfe00707fU 
-                                                            & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                          & ((0x37U 
-                                                              != 
-                                                              (0x7fU 
-                                                               & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                             & ((0x6fU 
-                                                                 != 
-                                                                 (0x7fU 
-                                                                  & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                                & ((0x67U 
-                                                                    != 
-                                                                    (0x707fU 
-                                                                     & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                                   & ((0x17U 
-                                                                       != 
-                                                                       (0x7fU 
-                                                                        & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                                      & (0x3023U 
-                                                                         == 
-                                                                         (0x707fU 
-                                                                          & vlSelf->core__DOT__if_id_pl__DOT__instR))))))))));
-    vlSelf->io_Deubug_Debug_pc = vlSelf->core__DOT__mem_wb_pl__DOT__pcR;
-    vlSelf->core__DOT__ex_mem_pl__DOT__pcR = ((IData)(vlSelf->reset)
-                                               ? 0ULL
-                                               : vlSelf->core__DOT__id_ex_pl__DOT__pcR);
-    vlSelf->io_Deubug_Debug_inst = vlSelf->core__DOT__mem_wb_pl__DOT__instR;
-    Vcore___024root____Vdpiimwrap_core__DOT__dpi__DOT__is_ebreak_TOP(vlSelf->core__DOT__mem_wb_pl__DOT__instR, vlSelf->__Vfunc_core__DOT__dpi__DOT__is_ebreak__0__Vfuncout);
-    if (VL_UNLIKELY(vlSelf->__Vfunc_core__DOT__dpi__DOT__is_ebreak__0__Vfuncout)) {
-        VL_WRITEF("\n\033[1;34mebreak! inst : 0x%016x\n\033[0m\n\n",
-                  32,vlSelf->core__DOT__mem_wb_pl__DOT__instR);
-        VL_FINISH_MT("src/vsrc/dpi.v", 8, "");
-    }
-    if (vlSelf->reset) {
-        vlSelf->core__DOT__ex_mem_pl__DOT__instR = 0U;
-        vlSelf->core__DOT__ex_mem_pl__DOT__alu_outR = 0ULL;
-        vlSelf->core__DOT__mem_wb_pl__DOT__Dmem_rdataR = 0ULL;
-    } else {
-        vlSelf->core__DOT__ex_mem_pl__DOT__instR = vlSelf->core__DOT__id_ex_pl__DOT__instR;
-        vlSelf->core__DOT__ex_mem_pl__DOT__alu_outR 
-            = ((5U == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                ? vlSelf->core__DOT___alu_out_T_10 : vlSelf->core__DOT___alu_out_T_20);
-        vlSelf->core__DOT__mem_wb_pl__DOT__Dmem_rdataR 
-            = vlSelf->io_DMemio_rdata;
-    }
-    vlSelf->core__DOT__mem_wb_pl__DOT__rf_wenR = ((~ (IData)(vlSelf->reset)) 
-                                                  & (IData)(vlSelf->core__DOT__ex_mem_pl__DOT__rf_wenR));
-    if (vlSelf->reset) {
-        vlSelf->core__DOT__mem_wb_pl__DOT__wb_addrR = 0U;
-        vlSelf->core__DOT__mem_wb_pl__DOT__wb_selR = 0U;
-        vlSelf->core__DOT__id_ex_pl__DOT__immR = 0ULL;
-    } else {
-        vlSelf->core__DOT__mem_wb_pl__DOT__wb_addrR 
-            = vlSelf->core__DOT__ex_mem_pl__DOT__wb_addrR;
-        vlSelf->core__DOT__mem_wb_pl__DOT__wb_selR 
-            = vlSelf->core__DOT__ex_mem_pl__DOT__wb_selR;
-        vlSelf->core__DOT__id_ex_pl__DOT__immR = vlSelf->core__DOT__id_ex_pl_io_src_in_imm;
-    }
-    vlSelf->core__DOT__id_ex_pl__DOT__inst_is_j_flagR 
-        = ((~ (IData)(vlSelf->reset)) & ((0x6fU == 
-                                          (0x7fU & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                         | (0x67U == 
-                                            (0x707fU 
-                                             & vlSelf->core__DOT__if_id_pl__DOT__instR))));
-    VL_EXTEND_WQ(76,64, __Vtemp1, ((((vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                      >> 0x1fU) ? 0xfffffffffffffULL
-                                      : 0ULL) << 0xcU) 
-                                   | (QData)((IData)(
-                                                     ((0xfe0U 
-                                                       & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                          >> 0x14U)) 
-                                                      | (0x1fU 
-                                                         & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                            >> 7U)))))));
-    VL_EXTEND_WQ(76,64, __Vtemp2, ((((vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                      >> 0x1fU) ? 0x7ffffffffffULL
-                                      : 0ULL) << 0x15U) 
-                                   | (QData)((IData)(
-                                                     ((0x100000U 
-                                                       & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                          >> 0xbU)) 
-                                                      | ((0xff000U 
-                                                          & vlSelf->core__DOT__if_id_pl__DOT__instR) 
-                                                         | ((0xffcU 
-                                                             & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                >> 0x13U)) 
-                                                            | (2U 
-                                                               & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                  >> 0x13U)))))))));
-    VL_EXTEND_WQ(76,64, __Vtemp4, ((2U == (IData)(vlSelf->core__DOT__op2_sel))
-                                    ? ((((vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                          >> 0x1fU)
-                                          ? 0xfffffffffffffULL
-                                          : 0ULL) << 0xcU) 
-                                       | (QData)((IData)(
-                                                         (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                          >> 0x14U))))
-                                    : ((1U == (IData)(vlSelf->core__DOT__op2_sel))
-                                        ? vlSelf->core__DOT__rf_io_channel_rdata2
-                                        : 0ULL)));
-    if (vlSelf->reset) {
-        vlSelf->core__DOT__id_ex_pl__DOT__src2R = 0ULL;
-        vlSelf->core__DOT__id_ex_pl__DOT__src1R = 0ULL;
-    } else {
-        vlSelf->core__DOT__id_ex_pl__DOT__src2R = (
-                                                   ((QData)((IData)(
-                                                                    ((3U 
-                                                                      == (IData)(vlSelf->core__DOT__op2_sel))
-                                                                      ? 
-                                                                     __Vtemp1[1U]
-                                                                      : 
-                                                                     ((5U 
-                                                                       == (IData)(vlSelf->core__DOT__op2_sel))
-                                                                       ? 
-                                                                      __Vtemp2[1U]
-                                                                       : 
-                                                                      ((4U 
-                                                                        == (IData)(vlSelf->core__DOT__op2_sel))
-                                                                        ? 
-                                                                       (((IData)(
-                                                                                ((((vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                                >> 0x1fU)
-                                                                                 ? 0xfffffffffffULL
-                                                                                 : 0ULL) 
-                                                                                << 0x14U) 
-                                                                                | (QData)((IData)(
-                                                                                (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                                >> 0xcU))))) 
-                                                                         >> 0x14U) 
-                                                                        | ((IData)(
-                                                                                (((((vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                                >> 0x1fU)
-                                                                                 ? 0xfffffffffffULL
-                                                                                 : 0ULL) 
-                                                                                << 0x14U) 
-                                                                                | (QData)((IData)(
-                                                                                (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                                >> 0xcU)))) 
-                                                                                >> 0x20U)) 
-                                                                           << 0xcU))
-                                                                        : 
-                                                                       __Vtemp4[1U]))))) 
-                                                    << 0x20U) 
-                                                   | (QData)((IData)(
-                                                                     ((3U 
-                                                                       == (IData)(vlSelf->core__DOT__op2_sel))
-                                                                       ? 
-                                                                      __Vtemp1[0U]
-                                                                       : 
-                                                                      ((5U 
-                                                                        == (IData)(vlSelf->core__DOT__op2_sel))
-                                                                        ? 
-                                                                       __Vtemp2[0U]
-                                                                        : 
-                                                                       ((4U 
-                                                                         == (IData)(vlSelf->core__DOT__op2_sel))
-                                                                         ? 
-                                                                        ((IData)(
-                                                                                ((((vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                                >> 0x1fU)
-                                                                                 ? 0xfffffffffffULL
-                                                                                 : 0ULL) 
-                                                                                << 0x14U) 
-                                                                                | (QData)((IData)(
-                                                                                (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                                >> 0xcU))))) 
-                                                                         << 0xcU)
-                                                                         : 
-                                                                        __Vtemp4[0U]))))));
-        vlSelf->core__DOT__id_ex_pl__DOT__src1R = (
-                                                   (3U 
-                                                    == (IData)(vlSelf->core__DOT__op1_sel))
-                                                    ? (QData)((IData)(
-                                                                      (0x1fU 
-                                                                       & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                                          >> 0xfU))))
-                                                    : 
-                                                   ((1U 
-                                                     == (IData)(vlSelf->core__DOT__op1_sel))
-                                                     ? vlSelf->core__DOT__pc_reg
-                                                     : 
-                                                    ((0U 
-                                                      == (IData)(vlSelf->core__DOT__op1_sel))
-                                                      ? 
-                                                     ((0U 
-                                                       == 
-                                                       (0x1fU 
-                                                        & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                           >> 0xfU)))
-                                                       ? 0ULL
-                                                       : 
-                                                      vlSelf->core__DOT__rf__DOT__rfR
-                                                      [
-                                                      (0x1fU 
-                                                       & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                          >> 0xfU))])
-                                                      : 0ULL)));
-    }
-    if (__Vdlyvset__core__DOT__rf__DOT__rfR__v0) {
-        vlSelf->core__DOT__rf__DOT__rfR[__Vdlyvdim0__core__DOT__rf__DOT__rfR__v0] 
-            = __Vdlyvval__core__DOT__rf__DOT__rfR__v0;
-    }
-    if (vlSelf->reset) {
-        vlSelf->core__DOT__id_ex_pl__DOT__pcR = 0ULL;
-        vlSelf->core__DOT__id_ex_pl__DOT__instR = 0U;
-    } else {
-        vlSelf->core__DOT__id_ex_pl__DOT__pcR = (QData)((IData)(vlSelf->core__DOT__if_id_pl__DOT__pcR));
-        vlSelf->core__DOT__id_ex_pl__DOT__instR = vlSelf->core__DOT__if_id_pl__DOT__instR;
-    }
-    vlSelf->io_DMemio_addr = (IData)(vlSelf->core__DOT__ex_mem_pl__DOT__alu_outR);
-    vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR 
-        = ((IData)(vlSelf->reset) ? 0U : ((0x13U == 
-                                           (0x707fU 
-                                            & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                           ? 1U : (
-                                                   (0x33U 
+                                                   ((4U 
+                                                     == (IData)(vlSelf->Core__DOT__ctriSigs_deco_3))
+                                                     ? 4ULL
+                                                     : vlSelf->Core__DOT___opVec_1_T_5)));
+        vlSelf->Core__DOT__exCtrlSigs_excTy = ((IData)(vlSelf->Core__DOT__load_stall)
+                                                ? 1U
+                                                : (
+                                                   (0x13U 
                                                     == 
-                                                    (0xfe00707fU 
-                                                     & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                    ? 1U
-                                                    : 
-                                                   ((0x40000033U 
-                                                     == 
-                                                     (0xfe00707fU 
-                                                      & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                     ? 2U
-                                                     : 
-                                                    ((0x37U 
-                                                      == 
-                                                      (0x7fU 
-                                                       & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                      ? 1U
-                                                      : 
-                                                     ((0x6fU 
+                                                    (0x707fU 
+                                                     & vlSelf->Core__DOT__If2IdInst)) 
+                                                   | ((0x17U 
                                                        == 
                                                        (0x7fU 
-                                                        & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                       ? 1U
-                                                       : 
-                                                      ((0x67U 
-                                                        == 
-                                                        (0x707fU 
-                                                         & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                        ? 0x11U
-                                                        : 
-                                                       ((0x17U 
-                                                         == 
-                                                         (0x7fU 
-                                                          & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                         ? 1U
-                                                         : 
-                                                        ((0x3023U 
+                                                        & vlSelf->Core__DOT__If2IdInst)) 
+                                                      | ((0x37U 
                                                           == 
-                                                          (0x707fU 
-                                                           & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                          ? 1U
-                                                          : 
-                                                         ((0x63U 
-                                                           == 
-                                                           (0x707fU 
-                                                            & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                           ? 0xbU
-                                                           : 0U))))))))));
-    vlSelf->io_Deubug_Debug_rf_wen = vlSelf->core__DOT__mem_wb_pl__DOT__rf_wenR;
-    vlSelf->core__DOT__ex_mem_pl__DOT__rf_wenR = ((~ (IData)(vlSelf->reset)) 
-                                                  & (IData)(vlSelf->core__DOT__id_ex_pl__DOT__wenR));
-    vlSelf->io_Deubug_Debug_rf_waddr = vlSelf->core__DOT__mem_wb_pl__DOT__wb_addrR;
-    vlSelf->core__DOT__ex_mem_pl__DOT__wb_addrR = ((IData)(vlSelf->reset)
-                                                    ? 0U
-                                                    : (IData)(vlSelf->core__DOT__id_ex_pl__DOT__wb_addrR));
-    vlSelf->core__DOT___wb_data_T_3 = ((2U == (IData)(vlSelf->core__DOT__mem_wb_pl__DOT__wb_selR))
-                                        ? vlSelf->core__DOT__mem_wb_pl__DOT__pcplus4R
-                                        : ((1U == (IData)(vlSelf->core__DOT__mem_wb_pl__DOT__wb_selR))
-                                            ? vlSelf->core__DOT__mem_wb_pl__DOT__aluR
-                                            : 0ULL));
-    vlSelf->core__DOT__ex_mem_pl__DOT__wb_selR = ((IData)(vlSelf->reset)
-                                                   ? 0U
-                                                   : (IData)(vlSelf->core__DOT__id_ex_pl__DOT__wtypeR));
-    vlSelf->core__DOT__id_ex_pl_io_src_in_imm = vlSelf->core__DOT__id_ex_pl__DOT__immR;
-    vlSelf->core__DOT___hi_T_11 = (vlSelf->core__DOT__id_ex_pl__DOT__src1R 
-                                   < vlSelf->core__DOT__id_ex_pl__DOT__src2R);
-    vlSelf->core__DOT___alu_out_T_10 = (vlSelf->core__DOT__id_ex_pl__DOT__src1R 
-                                        ^ vlSelf->core__DOT__id_ex_pl__DOT__src2R);
-    core__DOT___alu_out_T_7 = (vlSelf->core__DOT__id_ex_pl__DOT__src1R 
-                               + vlSelf->core__DOT__id_ex_pl__DOT__src2R);
-    vlSelf->io_Deubug_Debug_rf_wdata = ((3U == (IData)(vlSelf->core__DOT__mem_wb_pl__DOT__wb_selR))
-                                         ? vlSelf->core__DOT__mem_wb_pl__DOT__Dmem_rdataR
-                                         : vlSelf->core__DOT___wb_data_T_3);
-    vlSelf->core__DOT__if_id_pl__DOT__pcR = ((IData)(vlSelf->reset)
-                                              ? 0ULL
-                                              : vlSelf->core__DOT__pc_reg);
-    vlSelf->core__DOT___alu_out_T_20 = ((0x11U == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                         ? (0xfffffffffffffffeULL 
-                                            & core__DOT___alu_out_T_7)
-                                         : ((4U == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                             ? (vlSelf->core__DOT__id_ex_pl__DOT__src1R 
-                                                | vlSelf->core__DOT__id_ex_pl__DOT__src2R)
-                                             : ((3U 
-                                                 == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                                 ? 
-                                                (vlSelf->core__DOT__id_ex_pl__DOT__src1R 
-                                                 & vlSelf->core__DOT__id_ex_pl__DOT__src2R)
-                                                 : 
-                                                ((2U 
-                                                  == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                                  ? 
-                                                 (vlSelf->core__DOT__id_ex_pl__DOT__src1R 
-                                                  - vlSelf->core__DOT__id_ex_pl__DOT__src2R)
-                                                  : 
-                                                 ((1U 
-                                                   == (IData)(vlSelf->core__DOT__id_ex_pl__DOT__exeu_op_selR))
-                                                   ? core__DOT___alu_out_T_7
-                                                   : 0ULL)))));
-    vlSelf->core__DOT__id_ex_pl__DOT__wenR = ((~ (IData)(vlSelf->reset)) 
-                                              & ((0x13U 
-                                                  == 
-                                                  (0x707fU 
-                                                   & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                 | ((0x33U 
-                                                     == 
-                                                     (0xfe00707fU 
-                                                      & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                    | ((0x40000033U 
-                                                        == 
-                                                        (0xfe00707fU 
-                                                         & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                       | ((0x37U 
-                                                           == 
-                                                           (0x7fU 
-                                                            & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                          | ((0x6fU 
-                                                              == 
-                                                              (0x7fU 
-                                                               & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                             | ((0x67U 
-                                                                 == 
-                                                                 (0x707fU 
-                                                                  & vlSelf->core__DOT__if_id_pl__DOT__instR)) 
-                                                                | (0x17U 
+                                                          (0x7fU 
+                                                           & vlSelf->Core__DOT__If2IdInst)) 
+                                                         | ((0x6fU 
+                                                             == 
+                                                             (0x7fU 
+                                                              & vlSelf->Core__DOT__If2IdInst)) 
+                                                            | ((0x67U 
+                                                                == 
+                                                                (0x707fU 
+                                                                 & vlSelf->Core__DOT__If2IdInst)) 
+                                                               | ((0x63U 
                                                                    == 
-                                                                   (0x7fU 
-                                                                    & vlSelf->core__DOT__if_id_pl__DOT__instR)))))))));
-    if (vlSelf->reset) {
-        vlSelf->core__DOT__id_ex_pl__DOT__wb_addrR = 0U;
-        vlSelf->core__DOT__id_ex_pl__DOT__wtypeR = 0U;
-    } else {
-        vlSelf->core__DOT__id_ex_pl__DOT__wb_addrR 
-            = (0x1fU & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                        >> 7U));
-        vlSelf->core__DOT__id_ex_pl__DOT__wtypeR = 
-            ((0x13U == (0x707fU & vlSelf->core__DOT__if_id_pl__DOT__instR))
-              ? 1U : ((0x33U == (0xfe00707fU & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                       ? 1U : ((0x40000033U == (0xfe00707fU 
-                                                & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                ? 1U : ((0x37U == (0x7fU 
-                                                   & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                         ? 1U : ((0x6fU 
-                                                  == 
-                                                  (0x7fU 
-                                                   & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                  ? 2U
-                                                  : 
-                                                 ((0x67U 
-                                                   == 
-                                                   (0x707fU 
-                                                    & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                   ? 2U
-                                                   : 
-                                                  ((0x17U 
-                                                    == 
-                                                    (0x7fU 
-                                                     & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                    ? 1U
-                                                    : 0U)))))));
+                                                                   (0x707fU 
+                                                                    & vlSelf->Core__DOT__If2IdInst)) 
+                                                                  | ((0x2003U 
+                                                                      == 
+                                                                      (0x707fU 
+                                                                       & vlSelf->Core__DOT__If2IdInst)) 
+                                                                     | ((0x2023U 
+                                                                         == 
+                                                                         (0x707fU 
+                                                                          & vlSelf->Core__DOT__If2IdInst)) 
+                                                                        | (0x3023U 
+                                                                           == 
+                                                                           (0x707fU 
+                                                                            & vlSelf->Core__DOT__If2IdInst)))))))))));
     }
-    vlSelf->core__DOT__pc_reg = __Vdly__core__DOT__pc_reg;
-    vlSelf->core__DOT__pc_plus4 = (4ULL + vlSelf->core__DOT__pc_reg);
-    vlSelf->io_Imemio_pc = vlSelf->core__DOT__pc_reg;
-    vlSelf->core__DOT__if_id_pl__DOT__instR = ((IData)(vlSelf->reset)
-                                                ? 0U
-                                                : vlSelf->io_Imemio_inst);
-    if ((0x13U == (0x707fU & vlSelf->core__DOT__if_id_pl__DOT__instR))) {
-        vlSelf->core__DOT__op1_sel = 0U;
-        vlSelf->core__DOT__op2_sel = 2U;
-    } else {
-        vlSelf->core__DOT__op1_sel = ((0x33U == (0xfe00707fU 
-                                                 & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                       ? 0U : ((0x40000033U 
-                                                == 
-                                                (0xfe00707fU 
-                                                 & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                ? 0U
-                                                : (
-                                                   (0x37U 
+    if (((0U != (IData)(vlSelf->Core__DOT__wbAddr)) 
+         & (IData)(vlSelf->Core__DOT__ctrlSigsWb_rfwen))) {
+        __Vdlyvval__Core__DOT__gpr__v0 = vlSelf->Core__DOT__wbData;
+        __Vdlyvset__Core__DOT__gpr__v0 = 1U;
+        __Vdlyvdim0__Core__DOT__gpr__v0 = vlSelf->Core__DOT__wbAddr;
+    }
+    if (__Vdlyvset__Core__DOT__gpr__v0) {
+        vlSelf->Core__DOT__gpr[__Vdlyvdim0__Core__DOT__gpr__v0] 
+            = __Vdlyvval__Core__DOT__gpr__v0;
+    }
+    vlSelf->io_dmem_wdata = vlSelf->Core__DOT__storeDataMem;
+    vlSelf->Core__DOT__exStoreData = ((IData)(vlSelf->reset)
+                                       ? 0ULL : ((IData)(vlSelf->Core__DOT__load_stall)
+                                                  ? 0ULL
+                                                  : vlSelf->Core__DOT___opVec_1_T));
+    vlSelf->io_debug_debugPc = vlSelf->Core__DOT__pcWb;
+    vlSelf->Core__DOT__pcMem = ((IData)(vlSelf->reset)
+                                 ? 0ULL : vlSelf->Core__DOT__exPc);
+    vlSelf->io_dmem_cen = vlSelf->Core__DOT__ctrlSigsMem_memcen;
+    vlSelf->Core__DOT__exCtrlSigs_memcen = ((~ (IData)(vlSelf->reset)) 
+                                            & ((~ (IData)(vlSelf->Core__DOT__load_stall)) 
+                                               & ((0x13U 
+                                                   != 
+                                                   (0x707fU 
+                                                    & vlSelf->Core__DOT__If2IdInst)) 
+                                                  & ((0x17U 
+                                                      != 
+                                                      (0x7fU 
+                                                       & vlSelf->Core__DOT__If2IdInst)) 
+                                                     & ((0x37U 
+                                                         != 
+                                                         (0x7fU 
+                                                          & vlSelf->Core__DOT__If2IdInst)) 
+                                                        & ((0x6fU 
+                                                            != 
+                                                            (0x7fU 
+                                                             & vlSelf->Core__DOT__If2IdInst)) 
+                                                           & ((0x67U 
+                                                               != 
+                                                               (0x707fU 
+                                                                & vlSelf->Core__DOT__If2IdInst)) 
+                                                              & ((0x63U 
+                                                                  != 
+                                                                  (0x707fU 
+                                                                   & vlSelf->Core__DOT__If2IdInst)) 
+                                                                 & ((0x2003U 
+                                                                     == 
+                                                                     (0x707fU 
+                                                                      & vlSelf->Core__DOT__If2IdInst)) 
+                                                                    | ((0x2023U 
+                                                                        == 
+                                                                        (0x707fU 
+                                                                         & vlSelf->Core__DOT__If2IdInst)) 
+                                                                       | (0x3023U 
+                                                                          == 
+                                                                          (0x707fU 
+                                                                           & vlSelf->Core__DOT__If2IdInst))))))))))));
+    vlSelf->io_dmem_wen = (0U != (IData)(vlSelf->Core__DOT__ctrlSigsMem_memwen));
+    vlSelf->Core__DOT__exCtrlSigs_memwen = ((IData)(vlSelf->reset)
+                                             ? 0U : 
+                                            ((IData)(vlSelf->Core__DOT__load_stall)
+                                              ? 0U : 
+                                             ((0x13U 
+                                               == (0x707fU 
+                                                   & vlSelf->Core__DOT__If2IdInst))
+                                               ? 0U
+                                               : ((0x17U 
+                                                   == 
+                                                   (0x7fU 
+                                                    & vlSelf->Core__DOT__If2IdInst))
+                                                   ? 0U
+                                                   : 
+                                                  ((0x37U 
                                                     == 
                                                     (0x7fU 
-                                                     & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                    ? 2U
+                                                     & vlSelf->Core__DOT__If2IdInst))
+                                                    ? 0U
                                                     : 
                                                    ((0x6fU 
                                                      == 
                                                      (0x7fU 
-                                                      & vlSelf->core__DOT__if_id_pl__DOT__instR))
+                                                      & vlSelf->Core__DOT__If2IdInst))
+                                                     ? 0U
+                                                     : 
+                                                    ((0x67U 
+                                                      == 
+                                                      (0x707fU 
+                                                       & vlSelf->Core__DOT__If2IdInst))
+                                                      ? 0U
+                                                      : 
+                                                     ((0x63U 
+                                                       == 
+                                                       (0x707fU 
+                                                        & vlSelf->Core__DOT__If2IdInst))
+                                                       ? 0U
+                                                       : 
+                                                      ((0x2003U 
+                                                        == 
+                                                        (0x707fU 
+                                                         & vlSelf->Core__DOT__If2IdInst))
+                                                        ? 0U
+                                                        : 
+                                                       ((0x2023U 
+                                                         == 
+                                                         (0x707fU 
+                                                          & vlSelf->Core__DOT__If2IdInst))
+                                                         ? 0xfU
+                                                         : 
+                                                        ((0x3023U 
+                                                          == 
+                                                          (0x707fU 
+                                                           & vlSelf->Core__DOT__If2IdInst))
+                                                          ? 0xfU
+                                                          : 0U)))))))))));
+    vlSelf->io_debug_debugInst = vlSelf->Core__DOT__instWb;
+    vlSelf->Core__DOT__instMem = ((IData)(vlSelf->reset)
+                                   ? 0x13U : vlSelf->Core__DOT__exInst);
+    vlSelf->Core__DOT__cenreg = (1U & (~ (IData)(vlSelf->reset)));
+    vlSelf->Core__DOT__Alu__DOT__op2 = ((2U == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy))
+                                         ? (1ULL + 
+                                            (~ vlSelf->Core__DOT__exOpVec_1))
+                                         : vlSelf->Core__DOT__exOpVec_1);
+    vlSelf->Core__DOT__wbAddr = ((IData)(vlSelf->reset)
+                                  ? 0U : (IData)(vlSelf->Core__DOT__rdMem));
+    vlSelf->Core__DOT__ctrlSigsWb_rfwen = ((IData)(vlSelf->reset) 
+                                           | (IData)(vlSelf->Core__DOT__ctrlSigsMem_rfwen));
+    vlSelf->Core__DOT__wbData = ((IData)(vlSelf->reset)
+                                  ? 0ULL : ((2U == (IData)(vlSelf->Core__DOT__ctrlSigsMem_wbdSel))
+                                             ? vlSelf->io_dmem_rdata
+                                             : vlSelf->Core__DOT__alu_resultMem));
+    VCore___024root____Vdpiimwrap_Core__DOT__dpi__DOT__is_ebreak_TOP(vlSelf->io_debug_debugInst, vlSelf->__Vfunc_Core__DOT__dpi__DOT__is_ebreak__0__Vfuncout);
+    if (VL_UNLIKELY(vlSelf->__Vfunc_Core__DOT__dpi__DOT__is_ebreak__0__Vfuncout)) {
+        VL_WRITEF("\n\033[1;34mebreak! inst : 0x%016x\n\033[0m\n\n",
+                  32,vlSelf->io_debug_debugInst);
+        VL_FINISH_MT("src/vsrc/dpi.v", 8, "");
+    }
+    if (vlSelf->reset) {
+        vlSelf->Core__DOT__exOpVec_0 = 0ULL;
+        vlSelf->Core__DOT__exPc = 0ULL;
+        vlSelf->Core__DOT__exInst = 0x13U;
+    } else {
+        vlSelf->Core__DOT__exOpVec_0 = ((IData)(vlSelf->Core__DOT__load_stall)
+                                         ? 0ULL : (
+                                                   (3U 
+                                                    == (IData)(vlSelf->Core__DOT__ctriSigs_deco_2))
+                                                    ? 0ULL
+                                                    : 
+                                                   ((2U 
+                                                     == (IData)(vlSelf->Core__DOT__ctriSigs_deco_2))
+                                                     ? vlSelf->Core__DOT__If2IdPc
+                                                     : vlSelf->Core__DOT___opVec_0_T)));
+        vlSelf->Core__DOT__exPc = ((IData)(vlSelf->Core__DOT__load_stall)
+                                    ? 0ULL : vlSelf->Core__DOT__If2IdPc);
+        vlSelf->Core__DOT__exInst = ((IData)(vlSelf->Core__DOT__load_stall)
+                                      ? 0x13U : vlSelf->Core__DOT__If2IdInst);
+    }
+    vlSelf->io_imem_cen = vlSelf->Core__DOT__cenreg;
+    vlSelf->io_debug_debugwaddr = vlSelf->Core__DOT__wbAddr;
+    vlSelf->Core__DOT__rdMem = ((IData)(vlSelf->reset)
+                                 ? 0U : (IData)(vlSelf->Core__DOT__exRd));
+    vlSelf->io_debug_debugwen = vlSelf->Core__DOT__ctrlSigsWb_rfwen;
+    vlSelf->Core__DOT__ctrlSigsMem_rfwen = ((IData)(vlSelf->reset) 
+                                            | (IData)(vlSelf->Core__DOT__exCtrlSigs_rfwen));
+    vlSelf->io_debug_debugdata = vlSelf->Core__DOT__wbData;
+    if (vlSelf->reset) {
+        vlSelf->Core__DOT__alu_resultMem = 0ULL;
+        vlSelf->Core__DOT__ctrlSigsMem_wbdSel = 1U;
+    } else {
+        vlSelf->Core__DOT__alu_resultMem = vlSelf->Core__DOT__Alu_io_result;
+        vlSelf->Core__DOT__ctrlSigsMem_wbdSel = vlSelf->Core__DOT__exCtrlSigs_wbdSel;
+    }
+    if (vlSelf->reset) {
+        vlSelf->Core__DOT__If2IdPc = 0ULL;
+    } else if (vlSelf->Core__DOT__branchBus_flag) {
+        vlSelf->Core__DOT__If2IdPc = 0ULL;
+    } else if ((1U & (~ (IData)(vlSelf->Core__DOT__load_stall)))) {
+        vlSelf->Core__DOT__If2IdPc = vlSelf->Core__DOT__pcreg;
+    }
+    vlSelf->Core__DOT__Alu__DOT___add_sub_result_T_1 
+        = (vlSelf->Core__DOT__exOpVec_0 + vlSelf->Core__DOT__Alu__DOT__op2);
+    vlSelf->Core__DOT__exRd = ((IData)(vlSelf->reset)
+                                ? 0U : ((IData)(vlSelf->Core__DOT__load_stall)
+                                         ? 0U : (0x1fU 
+                                                 & (vlSelf->Core__DOT__If2IdInst 
+                                                    >> 7U))));
+    vlSelf->Core__DOT__exCtrlSigs_rfwen = ((IData)(vlSelf->reset) 
+                                           | ((IData)(vlSelf->Core__DOT__load_stall) 
+                                              | ((0x13U 
+                                                  == 
+                                                  (0x707fU 
+                                                   & vlSelf->Core__DOT__If2IdInst)) 
+                                                 | ((0x17U 
+                                                     == 
+                                                     (0x7fU 
+                                                      & vlSelf->Core__DOT__If2IdInst)) 
+                                                    | ((0x37U 
+                                                        == 
+                                                        (0x7fU 
+                                                         & vlSelf->Core__DOT__If2IdInst)) 
+                                                       | ((0x6fU 
+                                                           == 
+                                                           (0x7fU 
+                                                            & vlSelf->Core__DOT__If2IdInst)) 
+                                                          | ((0x67U 
+                                                              == 
+                                                              (0x707fU 
+                                                               & vlSelf->Core__DOT__If2IdInst)) 
+                                                             | ((0x63U 
+                                                                 != 
+                                                                 (0x707fU 
+                                                                  & vlSelf->Core__DOT__If2IdInst)) 
+                                                                & (0x2003U 
+                                                                   == 
+                                                                   (0x707fU 
+                                                                    & vlSelf->Core__DOT__If2IdInst))))))))));
+    vlSelf->io_dmem_addr = vlSelf->Core__DOT__alu_resultMem;
+    vlSelf->Core__DOT__exCtrlSigs_wbdSel = ((IData)(vlSelf->reset)
+                                             ? 1U : 
+                                            ((IData)(vlSelf->Core__DOT__load_stall)
+                                              ? 1U : 
+                                             ((0x13U 
+                                               == (0x707fU 
+                                                   & vlSelf->Core__DOT__If2IdInst))
+                                               ? 1U
+                                               : ((0x17U 
+                                                   == 
+                                                   (0x7fU 
+                                                    & vlSelf->Core__DOT__If2IdInst))
+                                                   ? 1U
+                                                   : 
+                                                  ((0x37U 
+                                                    == 
+                                                    (0x7fU 
+                                                     & vlSelf->Core__DOT__If2IdInst))
+                                                    ? 1U
+                                                    : 
+                                                   ((0x6fU 
+                                                     == 
+                                                     (0x7fU 
+                                                      & vlSelf->Core__DOT__If2IdInst))
                                                      ? 1U
                                                      : 
                                                     ((0x67U 
                                                       == 
                                                       (0x707fU 
-                                                       & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                      ? 0U
+                                                       & vlSelf->Core__DOT__If2IdInst))
+                                                      ? 1U
                                                       : 
-                                                     ((0x17U 
+                                                     ((0x63U 
                                                        == 
-                                                       (0x7fU 
-                                                        & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                       ? 1U
+                                                       (0x707fU 
+                                                        & vlSelf->Core__DOT__If2IdInst))
+                                                       ? 0U
                                                        : 
-                                                      ((0x3023U 
+                                                      ((0x2003U 
                                                         == 
                                                         (0x707fU 
-                                                         & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                        ? 0U
-                                                        : 
-                                                       ((0x63U 
-                                                         == 
-                                                         (0x707fU 
-                                                          & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                         ? 0U
-                                                         : 2U))))))));
-        vlSelf->core__DOT__op2_sel = ((0x33U == (0xfe00707fU 
-                                                 & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                       ? 1U : ((0x40000033U 
-                                                == 
-                                                (0xfe00707fU 
-                                                 & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                ? 1U
-                                                : (
-                                                   (0x37U 
+                                                         & vlSelf->Core__DOT__If2IdInst))
+                                                        ? 2U
+                                                        : 0U)))))))));
+    vlSelf->Core__DOT__pcreg = __Vdly__Core__DOT__pcreg;
+    vlSelf->Core__DOT__Alu_io_result = (((3U == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy)) 
+                                         | (5U == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy)))
+                                         ? ((5U == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy))
+                                             ? (QData)((IData)(
+                                                               (vlSelf->Core__DOT__exOpVec_0 
+                                                                < vlSelf->Core__DOT__Alu__DOT__op2)))
+                                             : ((3U 
+                                                 == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy))
+                                                 ? (QData)((IData)(
+                                                                   VL_LTS_IQQ(1,64,64, vlSelf->Core__DOT__exOpVec_0, 
+                                                                              ((2U 
+                                                                                == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy))
+                                                                                ? 
+                                                                               (1ULL 
+                                                                                + 
+                                                                                (~ vlSelf->Core__DOT__exOpVec_1))
+                                                                                : vlSelf->Core__DOT__exOpVec_1))))
+                                                 : 0ULL))
+                                         : ((4U == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy))
+                                             ? (((QData)((IData)(
+                                                                 ((1U 
+                                                                   & (IData)(
+                                                                             (vlSelf->Core__DOT__Alu__DOT___add_sub_result_T_1 
+                                                                              >> 0x1fU)))
+                                                                   ? 0xffffffffU
+                                                                   : 0U))) 
+                                                 << 0x20U) 
+                                                | (QData)((IData)(vlSelf->Core__DOT__Alu__DOT___add_sub_result_T_1)))
+                                             : ((2U 
+                                                 == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy))
+                                                 ? vlSelf->Core__DOT__Alu__DOT___add_sub_result_T_1
+                                                 : 
+                                                ((1U 
+                                                  == (IData)(vlSelf->Core__DOT__exCtrlSigs_excTy))
+                                                  ? vlSelf->Core__DOT__Alu__DOT___add_sub_result_T_1
+                                                  : 0ULL))));
+    vlSelf->Core__DOT__seq_pc = (4ULL + vlSelf->Core__DOT__pcreg);
+    vlSelf->io_imem_addr = vlSelf->Core__DOT__pcreg;
+    if (vlSelf->reset) {
+        vlSelf->Core__DOT__If2IdInst = 0x13U;
+    } else if (vlSelf->Core__DOT__branchBus_flag) {
+        vlSelf->Core__DOT__If2IdInst = 0x13U;
+    } else if ((1U & (~ (IData)(vlSelf->Core__DOT__load_stall)))) {
+        vlSelf->Core__DOT__If2IdInst = vlSelf->io_imem_rdata;
+    }
+    vlSelf->Core__DOT__load_stall = ((IData)(vlSelf->Core__DOT__exCtrlSigs_memcen) 
+                                     & (0U == (IData)(vlSelf->Core__DOT__exCtrlSigs_memwen)));
+    if ((0x13U == (0x707fU & vlSelf->Core__DOT__If2IdInst))) {
+        vlSelf->Core__DOT__ctriSigs_deco_2 = 1U;
+        vlSelf->Core__DOT__ctriSigs_deco_3 = 2U;
+        vlSelf->Core__DOT__ctriSigs_deco_0 = 1U;
+    } else {
+        vlSelf->Core__DOT__ctriSigs_deco_2 = ((0x17U 
+                                               == (0x7fU 
+                                                   & vlSelf->Core__DOT__If2IdInst))
+                                               ? 2U
+                                               : ((0x37U 
+                                                   == 
+                                                   (0x7fU 
+                                                    & vlSelf->Core__DOT__If2IdInst))
+                                                   ? 3U
+                                                   : 
+                                                  ((0x6fU 
                                                     == 
                                                     (0x7fU 
-                                                     & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                    ? 4U
+                                                     & vlSelf->Core__DOT__If2IdInst))
+                                                    ? 2U
                                                     : 
-                                                   ((0x6fU 
+                                                   ((0x67U 
                                                      == 
-                                                     (0x7fU 
-                                                      & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                     ? 5U
+                                                     (0x707fU 
+                                                      & vlSelf->Core__DOT__If2IdInst))
+                                                     ? 2U
                                                      : 
-                                                    ((0x67U 
+                                                    ((0x63U 
                                                       == 
                                                       (0x707fU 
-                                                       & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                      ? 2U
+                                                       & vlSelf->Core__DOT__If2IdInst))
+                                                      ? 3U
                                                       : 
-                                                     ((0x17U 
+                                                     ((0x2003U 
                                                        == 
-                                                       (0x7fU 
-                                                        & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                       ? 4U
+                                                       (0x707fU 
+                                                        & vlSelf->Core__DOT__If2IdInst)) 
+                                                      | ((0x2023U 
+                                                          == 
+                                                          (0x707fU 
+                                                           & vlSelf->Core__DOT__If2IdInst)) 
+                                                         | (0x3023U 
+                                                            == 
+                                                            (0x707fU 
+                                                             & vlSelf->Core__DOT__If2IdInst)))))))));
+        vlSelf->Core__DOT__ctriSigs_deco_3 = ((0x17U 
+                                               == (0x7fU 
+                                                   & vlSelf->Core__DOT__If2IdInst))
+                                               ? 3U
+                                               : ((0x37U 
+                                                   == 
+                                                   (0x7fU 
+                                                    & vlSelf->Core__DOT__If2IdInst))
+                                                   ? 2U
+                                                   : 
+                                                  ((0x6fU 
+                                                    == 
+                                                    (0x7fU 
+                                                     & vlSelf->Core__DOT__If2IdInst))
+                                                    ? 4U
+                                                    : 
+                                                   ((0x67U 
+                                                     == 
+                                                     (0x707fU 
+                                                      & vlSelf->Core__DOT__If2IdInst))
+                                                     ? 2U
+                                                     : 
+                                                    ((0x63U 
+                                                      == 
+                                                      (0x707fU 
+                                                       & vlSelf->Core__DOT__If2IdInst))
+                                                      ? 3U
+                                                      : 
+                                                     ((0x2003U 
+                                                       == 
+                                                       (0x707fU 
+                                                        & vlSelf->Core__DOT__If2IdInst))
+                                                       ? 2U
                                                        : 
-                                                      ((0x3023U 
+                                                      ((0x2023U 
                                                         == 
                                                         (0x707fU 
-                                                         & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                        ? 3U
+                                                         & vlSelf->Core__DOT__If2IdInst))
+                                                        ? 2U
                                                         : 
-                                                       ((0x63U 
+                                                       ((0x3023U 
                                                          == 
                                                          (0x707fU 
-                                                          & vlSelf->core__DOT__if_id_pl__DOT__instR))
-                                                         ? 1U
+                                                          & vlSelf->Core__DOT__If2IdInst))
+                                                         ? 2U
+                                                         : 0U))))))));
+        vlSelf->Core__DOT__ctriSigs_deco_0 = ((0x17U 
+                                               == (0x7fU 
+                                                   & vlSelf->Core__DOT__If2IdInst))
+                                               ? 5U
+                                               : ((0x37U 
+                                                   == 
+                                                   (0x7fU 
+                                                    & vlSelf->Core__DOT__If2IdInst))
+                                                   ? 5U
+                                                   : 
+                                                  ((0x6fU 
+                                                    == 
+                                                    (0x7fU 
+                                                     & vlSelf->Core__DOT__If2IdInst))
+                                                    ? 4U
+                                                    : 
+                                                   ((0x67U 
+                                                     == 
+                                                     (0x707fU 
+                                                      & vlSelf->Core__DOT__If2IdInst))
+                                                     ? 1U
+                                                     : 
+                                                    ((0x63U 
+                                                      == 
+                                                      (0x707fU 
+                                                       & vlSelf->Core__DOT__If2IdInst))
+                                                      ? 2U
+                                                      : 
+                                                     ((0x2003U 
+                                                       == 
+                                                       (0x707fU 
+                                                        & vlSelf->Core__DOT__If2IdInst))
+                                                       ? 1U
+                                                       : 
+                                                      ((0x2023U 
+                                                        == 
+                                                        (0x707fU 
+                                                         & vlSelf->Core__DOT__If2IdInst))
+                                                        ? 1U
+                                                        : 
+                                                       ((0x3023U 
+                                                         == 
+                                                         (0x707fU 
+                                                          & vlSelf->Core__DOT__If2IdInst))
+                                                         ? 3U
                                                          : 0U))))))));
     }
-    vlSelf->core__DOT__rf_io_channel_rdata2 = ((0U 
-                                                == 
-                                                (0x1fU 
-                                                 & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                    >> 0x14U)))
-                                                ? 0ULL
-                                                : vlSelf->core__DOT__rf__DOT__rfR
-                                               [(0x1fU 
-                                                 & (vlSelf->core__DOT__if_id_pl__DOT__instR 
-                                                    >> 0x14U))]);
+    vlSelf->Core__DOT__imm_sigBit = ((6U != (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)) 
+                                     & (vlSelf->Core__DOT__If2IdInst 
+                                        >> 0x1fU));
+    vlSelf->Core__DOT___opVec_1_T_1 = ((((IData)(vlSelf->Core__DOT__imm_sigBit)
+                                          ? 0x1ffffffffULL
+                                          : 0ULL) << 0x1fU) 
+                                       | (QData)((IData)(
+                                                         ((0x7ff00000U 
+                                                           & (((5U 
+                                                                == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0))
+                                                                ? 
+                                                               (vlSelf->Core__DOT__If2IdInst 
+                                                                >> 0x14U)
+                                                                : 
+                                                               ((IData)(vlSelf->Core__DOT__imm_sigBit)
+                                                                 ? 0x7ffU
+                                                                 : 0U)) 
+                                                              << 0x14U)) 
+                                                          | ((0xff000U 
+                                                              & ((((5U 
+                                                                    != (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)) 
+                                                                   & (4U 
+                                                                      != (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)))
+                                                                   ? 
+                                                                  ((IData)(vlSelf->Core__DOT__imm_sigBit)
+                                                                    ? 0xffU
+                                                                    : 0U)
+                                                                   : 
+                                                                  (vlSelf->Core__DOT__If2IdInst 
+                                                                   >> 0xcU)) 
+                                                                 << 0xcU)) 
+                                                             | ((0x800U 
+                                                                 & (((2U 
+                                                                      == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0))
+                                                                      ? 
+                                                                     (vlSelf->Core__DOT__If2IdInst 
+                                                                      >> 7U)
+                                                                      : 
+                                                                     ((4U 
+                                                                       == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0))
+                                                                       ? 
+                                                                      (vlSelf->Core__DOT__If2IdInst 
+                                                                       >> 0x14U)
+                                                                       : 
+                                                                      ((~ 
+                                                                        ((5U 
+                                                                          == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)) 
+                                                                         | (6U 
+                                                                            == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)))) 
+                                                                       & (IData)(vlSelf->Core__DOT__imm_sigBit)))) 
+                                                                    << 0xbU)) 
+                                                                | (((((5U 
+                                                                       == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)) 
+                                                                      | (6U 
+                                                                         == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)))
+                                                                      ? 0U
+                                                                      : 
+                                                                     (0x3fU 
+                                                                      & (vlSelf->Core__DOT__If2IdInst 
+                                                                         >> 0x19U))) 
+                                                                    << 5U) 
+                                                                   | ((((5U 
+                                                                         == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0))
+                                                                         ? 0U
+                                                                         : 
+                                                                        (0xfU 
+                                                                         & (((3U 
+                                                                              == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)) 
+                                                                             | (2U 
+                                                                                == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)))
+                                                                             ? 
+                                                                            (vlSelf->Core__DOT__If2IdInst 
+                                                                             >> 8U)
+                                                                             : 
+                                                                            ((6U 
+                                                                              == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0))
+                                                                              ? 
+                                                                             (vlSelf->Core__DOT__If2IdInst 
+                                                                              >> 0x10U)
+                                                                              : 
+                                                                             (vlSelf->Core__DOT__If2IdInst 
+                                                                              >> 0x15U))))) 
+                                                                       << 1U) 
+                                                                      | (1U 
+                                                                         & ((3U 
+                                                                             == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0))
+                                                                             ? 
+                                                                            (vlSelf->Core__DOT__If2IdInst 
+                                                                             >> 7U)
+                                                                             : 
+                                                                            ((1U 
+                                                                              == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0))
+                                                                              ? 
+                                                                             (vlSelf->Core__DOT__If2IdInst 
+                                                                              >> 0x14U)
+                                                                              : 
+                                                                             ((6U 
+                                                                               == (IData)(vlSelf->Core__DOT__ctriSigs_deco_0)) 
+                                                                              & (vlSelf->Core__DOT__If2IdInst 
+                                                                                >> 0xfU)))))))))))));
 }
 
-void Vcore___024root___eval(Vcore___024root* vlSelf) {
+VL_INLINE_OPT void VCore___024root___combo__TOP__4(VCore___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vcore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcore___024root___eval\n"); );
+    VCore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VCore___024root___combo__TOP__4\n"); );
+    // Variables
+    QData/*63:0*/ Core__DOT___opVec_0_T_4;
+    QData/*63:0*/ Core__DOT___branchBus_flag_T;
+    QData/*63:0*/ Core__DOT___opVec_1_T_7;
+    QData/*63:0*/ Core__DOT___branchBus_flag_T_1;
+    // Body
+    vlSelf->Core__DOT__MemWbData = ((2U == (IData)(vlSelf->Core__DOT__ctrlSigsMem_wbdSel))
+                                     ? vlSelf->io_dmem_rdata
+                                     : vlSelf->Core__DOT__alu_resultMem);
+    vlSelf->Core__DOT___opVec_0_T = (((IData)(vlSelf->Core__DOT__exCtrlSigs_rfwen) 
+                                      & ((IData)(vlSelf->Core__DOT__exRd) 
+                                         == (0x1fU 
+                                             & (vlSelf->Core__DOT__If2IdInst 
+                                                >> 0xfU))))
+                                      ? vlSelf->Core__DOT__Alu_io_result
+                                      : (((IData)(vlSelf->Core__DOT__ctrlSigsMem_rfwen) 
+                                          & ((IData)(vlSelf->Core__DOT__rdMem) 
+                                             == (0x1fU 
+                                                 & (vlSelf->Core__DOT__If2IdInst 
+                                                    >> 0xfU))))
+                                          ? vlSelf->Core__DOT__MemWbData
+                                          : (((IData)(vlSelf->Core__DOT__ctrlSigsWb_rfwen) 
+                                              & ((IData)(vlSelf->Core__DOT__wbAddr) 
+                                                 == 
+                                                 (0x1fU 
+                                                  & (vlSelf->Core__DOT__If2IdInst 
+                                                     >> 0xfU))))
+                                              ? vlSelf->Core__DOT__wbData
+                                              : ((0U 
+                                                  == 
+                                                  (0x1fU 
+                                                   & (vlSelf->Core__DOT__If2IdInst 
+                                                      >> 0xfU)))
+                                                  ? 0ULL
+                                                  : 
+                                                 vlSelf->Core__DOT__gpr
+                                                 [(0x1fU 
+                                                   & (vlSelf->Core__DOT__If2IdInst 
+                                                      >> 0xfU))]))));
+    vlSelf->Core__DOT___opVec_1_T = (((IData)(vlSelf->Core__DOT__exCtrlSigs_rfwen) 
+                                      & ((IData)(vlSelf->Core__DOT__exRd) 
+                                         == (0x1fU 
+                                             & (vlSelf->Core__DOT__If2IdInst 
+                                                >> 0x14U))))
+                                      ? vlSelf->Core__DOT__Alu_io_result
+                                      : (((IData)(vlSelf->Core__DOT__ctrlSigsMem_rfwen) 
+                                          & ((IData)(vlSelf->Core__DOT__rdMem) 
+                                             == (0x1fU 
+                                                 & (vlSelf->Core__DOT__If2IdInst 
+                                                    >> 0x14U))))
+                                          ? vlSelf->Core__DOT__MemWbData
+                                          : (((IData)(vlSelf->Core__DOT__ctrlSigsWb_rfwen) 
+                                              & ((IData)(vlSelf->Core__DOT__wbAddr) 
+                                                 == 
+                                                 (0x1fU 
+                                                  & (vlSelf->Core__DOT__If2IdInst 
+                                                     >> 0x14U))))
+                                              ? vlSelf->Core__DOT__wbData
+                                              : ((0U 
+                                                  == 
+                                                  (0x1fU 
+                                                   & (vlSelf->Core__DOT__If2IdInst 
+                                                      >> 0x14U)))
+                                                  ? 0ULL
+                                                  : 
+                                                 vlSelf->Core__DOT__gpr
+                                                 [(0x1fU 
+                                                   & (vlSelf->Core__DOT__If2IdInst 
+                                                      >> 0x14U))]))));
+    Core__DOT___opVec_0_T_4 = ((2U == (IData)(vlSelf->Core__DOT__ctriSigs_deco_2))
+                                ? vlSelf->Core__DOT__If2IdPc
+                                : vlSelf->Core__DOT___opVec_0_T);
+    vlSelf->Core__DOT___opVec_1_T_5 = ((2U == (IData)(vlSelf->Core__DOT__ctriSigs_deco_3))
+                                        ? vlSelf->Core__DOT___opVec_1_T_1
+                                        : vlSelf->Core__DOT___opVec_1_T);
+    Core__DOT___branchBus_flag_T = ((3U == (IData)(vlSelf->Core__DOT__ctriSigs_deco_2))
+                                     ? 0ULL : Core__DOT___opVec_0_T_4);
+    Core__DOT___opVec_1_T_7 = ((4U == (IData)(vlSelf->Core__DOT__ctriSigs_deco_3))
+                                ? 4ULL : vlSelf->Core__DOT___opVec_1_T_5);
+    Core__DOT___branchBus_flag_T_1 = ((3U == (IData)(vlSelf->Core__DOT__ctriSigs_deco_3))
+                                       ? 0ULL : Core__DOT___opVec_1_T_7);
+    vlSelf->Core__DOT__branchBus_flag = (((((0x13U 
+                                             != (0x707fU 
+                                                 & vlSelf->Core__DOT__If2IdInst)) 
+                                            & ((0x17U 
+                                                != 
+                                                (0x7fU 
+                                                 & vlSelf->Core__DOT__If2IdInst)) 
+                                               & ((0x37U 
+                                                   != 
+                                                   (0x7fU 
+                                                    & vlSelf->Core__DOT__If2IdInst)) 
+                                                  & ((0x6fU 
+                                                      != 
+                                                      (0x7fU 
+                                                       & vlSelf->Core__DOT__If2IdInst)) 
+                                                     & ((0x67U 
+                                                         != 
+                                                         (0x707fU 
+                                                          & vlSelf->Core__DOT__If2IdInst)) 
+                                                        & (0x63U 
+                                                           == 
+                                                           (0x707fU 
+                                                            & vlSelf->Core__DOT__If2IdInst))))))) 
+                                           & (Core__DOT___branchBus_flag_T 
+                                              == Core__DOT___branchBus_flag_T_1)) 
+                                          | (0x67U 
+                                             == (0x707fU 
+                                                 & vlSelf->Core__DOT__If2IdInst))) 
+                                         | (0x6fU == 
+                                            (0x7fU 
+                                             & vlSelf->Core__DOT__If2IdInst)));
+}
+
+void VCore___024root___eval(VCore___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    VCore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VCore___024root___eval\n"); );
     // Body
     if (((IData)(vlSelf->clock) & (~ (IData)(vlSelf->__Vclklast__TOP__clock)))) {
-        Vcore___024root___sequent__TOP__1(vlSelf);
+        VCore___024root___sequent__TOP__2(vlSelf);
         vlSelf->__Vm_traceActivity[1U] = 1U;
     }
+    VCore___024root___combo__TOP__4(vlSelf);
     // Final
     vlSelf->__Vclklast__TOP__clock = vlSelf->clock;
 }
 
-QData Vcore___024root___change_request_1(Vcore___024root* vlSelf);
+QData VCore___024root___change_request_1(VCore___024root* vlSelf);
 
-VL_INLINE_OPT QData Vcore___024root___change_request(Vcore___024root* vlSelf) {
+VL_INLINE_OPT QData VCore___024root___change_request(VCore___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vcore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcore___024root___change_request\n"); );
+    VCore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VCore___024root___change_request\n"); );
     // Body
-    return (Vcore___024root___change_request_1(vlSelf));
+    return (VCore___024root___change_request_1(vlSelf));
 }
 
-VL_INLINE_OPT QData Vcore___024root___change_request_1(Vcore___024root* vlSelf) {
+VL_INLINE_OPT QData VCore___024root___change_request_1(VCore___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vcore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcore___024root___change_request_1\n"); );
+    VCore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VCore___024root___change_request_1\n"); );
     // Body
     // Change detection
     QData __req = false;  // Logically a bool
@@ -640,10 +820,10 @@ VL_INLINE_OPT QData Vcore___024root___change_request_1(Vcore___024root* vlSelf) 
 }
 
 #ifdef VL_DEBUG
-void Vcore___024root___eval_debug_assertions(Vcore___024root* vlSelf) {
+void VCore___024root___eval_debug_assertions(VCore___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
-    Vcore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcore___024root___eval_debug_assertions\n"); );
+    VCore__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VCore___024root___eval_debug_assertions\n"); );
     // Body
     if (VL_UNLIKELY((vlSelf->clock & 0xfeU))) {
         Verilated::overWidthError("clock");}

@@ -8,8 +8,8 @@
 #include <verilated_vcd_c.h>
 #endif 
 #include "svdpi.h"
-#include "Vcore__Dpi.h"
-#include "Vcore.h"
+#include "VCore__Dpi.h"
+#include "VCore.h"
 #include "common.h"
 #include "utils.h"
 #include "cpu.h"
@@ -18,23 +18,26 @@ static char logbuf[128];
 CPU_T npc_cpu ;
 
 void print_gpr(){
+    putchar('\n');
     for(int i = 1 ; i < 33 ;i++){
-        printf(FRONT_FONT "   ""gpr[%2d] :" " 0x%016lx " END_FONT ,i-1,npc_cpu.gpr[i-1] );
+        printf(COLOR_FONT "   ""gpr[%2d] :" " 0x%016lx " END_FONT ,i-1,npc_cpu.gpr[i-1] );
         if( i%4==0 || i == 32 ) putchar('\n');
         if(i == 32 )putchar('\n');
     }
 }
 
 const std::unique_ptr<VerilatedContext> contextp(new VerilatedContext);
-const std::unique_ptr<Vcore> top{new Vcore{contextp.get(),"TOP"}}; 
+const std::unique_ptr<VCore> top{new VCore{contextp.get(),"TOP"}}; 
 #ifdef CONFIG_VCD_TRACE_COND
 VerilatedVcdC * tfp = new VerilatedVcdC ;
 #endif 
 #ifdef CONFIG_DIFF_COND
 void write_ref_npc_cpu(){
-    npc_cpu.gpr[MUX((!(top->io_Deubug_Debug_rf_waddr)),(word_t)0,top->io_Deubug_Debug_rf_waddr)] 
-        = top->io_Deubug_Debug_rf_wdata ; 
-    npc_cpu.pc = top->io_Deubug_Debug_pc ;
+    if(top->io_debug_debugwen){
+    npc_cpu.gpr[MUX((!(top->io_debug_debugwaddr)),(word_t)0,top->io_debug_debugwaddr)] 
+        = top->io_debug_debugdata ; 
+    npc_cpu.pc = top->io_debug_debugPc ;
+    }
 }
 #endif
 
@@ -67,30 +70,34 @@ void eval_clk(){
 }
 
 void restart_npc() {//reset and after reset
- if(contextp->time()>0 && contextp->time()<10) {
+    if(contextp->time()>0 && contextp->time()<10) {
         top->reset = 1 ; 
         if(top->clock==1){   
-            top->io_Imemio_inst = inst_fetch(&top->io_Deubug_Debug_pc,4);
+            top->io_imem_rdata = inst_fetch(&top->io_debug_debugPc,4);
         }
     }else {
         if(top->clock == 1 ) {
             top->reset = 0; 
         }
-        if(top->io_Imemio_cen==1){
-            top->io_Imemio_inst = inst_fetch(&top->io_Imemio_pc,4);
-            }
+        if(top->io_imem_cen == 1){
+            top->io_imem_rdata = inst_fetch(&top->io_imem_addr,4);
+        }else{
+            top->io_imem_rdata = (u32)0x0 ;
+        }
     }
 }
 
 void printf_debug_info() {
-    if(top->clock == 1 && top->io_Imemio_cen==1 && top->io_Deubug_Debug_inst != 0){
+    if(top->clock == 1 && top->io_imem_cen==1 && 
+    top->io_debug_debugInst != EBREAK && top->io_debug_debugwen && top->io_debug_debugPc != 0x0 ){
+
         VL_PRINTF(FRONT_FONT "debug_pc is " FMT_WORD " " \
                     ",debug_inst is " FMT_HWORD  " "\
                     ", debug_waddr is 0x%02x" \
                     ", debug_wdata is "  FMT_WORD  " "\
                         END_FONT "\n",
-            SIGNAL(pc,_Deubug_Debug_),SIGNAL(inst,_Deubug_Debug_),\
-            SIGNAL(rf_waddr,_Deubug_Debug_),SIGNAL(rf_wdata,_Deubug_Debug_)
+            top->io_debug_debugPc,top->io_debug_debugInst,\
+            top->io_debug_debugwaddr,top->io_debug_debugdata
             );
     }
 }
@@ -102,10 +109,10 @@ void excute_once () {
     //======ITRACE ============
     #ifdef CONFIG_ITRACE
     char *p = logbuf ;
-    p += snprintf(p,sizeof(logbuf), "\t" "0x%016lx" "0x%8x" ":" , top->io_Deubug_Debug_pc , top->io_Deubug_Debug_inst );
+    p += snprintf(p,sizeof(logbuf), "\t" "0x%016lx" "0x%8x" ":" , top->io_debug_debugPc , top->io_debug_debugInst );
     int ilen = 4 ; //4 byte 
     int i ;
-    u8 *inst = (u8 *)top->io_Deubug_Debug_inst ;
+    u8 *inst = (u8 *)top->io_debug_debugInst ;
     for(i = 0 ; i < ilen ; i++) { // print the inst by byte 
         p += snprintf(p,4," %02x" , inst[i]);
     }
@@ -115,7 +122,7 @@ void excute_once () {
     space_len = space_len * 3 + 1 ;
     memset(p,' ',space_len);
     p += space_len ;
-    disassemble(p,logbuf+sizeof(logbuf)-p , top->io_Deubug_Debug_pc , (u8  *)&inst ,ilen);
+    disassemble(p,logbuf+sizeof(logbuf)-p , top->io_debug_debugPc , (u8  *)&inst ,ilen);
     #endif 
     dump_wave(); 
 

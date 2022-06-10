@@ -5,8 +5,6 @@
 
 
 static const u32 img[] = {
-    0xffffffff,
-    0xdeadbeee,
     ADDI,
     ADDI,
     ADDI,

@@ -1,6 +1,6 @@
 // Verilated -*- C++ -*-
 // DESCRIPTION: Verilator output: Design internal header
-// See Vcore.h for the primary calling header
+// See VCore.h for the primary calling header
 
 #ifndef VERILATED_VCORE___024ROOT_H_
 #define VERILATED_VCORE___024ROOT_H_  // guard
@@ -9,92 +9,98 @@
 
 //==========
 
-class Vcore__Syms;
-class Vcore_VerilatedVcd;
+class VCore__Syms;
+class VCore_VerilatedVcd;
 
 
 //----------
 
-VL_MODULE(Vcore___024root) {
+VL_MODULE(VCore___024root) {
   public:
 
     // PORTS
     VL_IN8(clock,0,0);
     VL_IN8(reset,0,0);
-    VL_OUT8(io_Imemio_cen,0,0);
-    VL_OUT8(io_DMemio_wen,0,0);
-    VL_OUT8(io_Deubug_Debug_rf_wen,0,0);
-    VL_OUT8(io_Deubug_Debug_rf_waddr,4,0);
-    VL_IN(io_Imemio_inst,31,0);
-    VL_OUT(io_DMemio_addr,31,0);
-    VL_OUT(io_Deubug_Debug_inst,31,0);
-    VL_OUT64(io_Imemio_pc,63,0);
-    VL_IN64(io_DMemio_rdata,63,0);
-    VL_OUT64(io_DMemio_wdata,63,0);
-    VL_OUT64(io_Deubug_Debug_rf_wdata,63,0);
-    VL_OUT64(io_Deubug_Debug_pc,63,0);
+    VL_OUT8(io_debug_debugwen,0,0);
+    VL_OUT8(io_debug_debugwaddr,4,0);
+    VL_OUT8(io_imem_cen,0,0);
+    VL_OUT8(io_imem_wen,0,0);
+    VL_OUT8(io_dmem_cen,0,0);
+    VL_OUT8(io_dmem_wen,0,0);
+    VL_OUT(io_debug_debugInst,31,0);
+    VL_IN(io_imem_rdata,31,0);
+    VL_OUT64(io_debug_debugPc,63,0);
+    VL_OUT64(io_debug_debugdata,63,0);
+    VL_OUT64(io_imem_addr,63,0);
+    VL_OUT64(io_imem_wdata,63,0);
+    VL_OUT64(io_dmem_addr,63,0);
+    VL_IN64(io_dmem_rdata,63,0);
+    VL_OUT64(io_dmem_wdata,63,0);
 
     // LOCAL SIGNALS
-    CData/*0:0*/ core__DOT__ImemCenR;
-    CData/*0:0*/ core__DOT___hi_T_11;
-    CData/*1:0*/ core__DOT__op1_sel;
-    CData/*2:0*/ core__DOT__op2_sel;
-    CData/*4:0*/ core__DOT__id_ex_pl__DOT__wb_addrR;
-    CData/*4:0*/ core__DOT__id_ex_pl__DOT__exeu_op_selR;
-    CData/*0:0*/ core__DOT__id_ex_pl__DOT__memwenR;
-    CData/*0:0*/ core__DOT__id_ex_pl__DOT__wenR;
-    CData/*1:0*/ core__DOT__id_ex_pl__DOT__wtypeR;
-    CData/*0:0*/ core__DOT__id_ex_pl__DOT__inst_is_j_flagR;
-    CData/*0:0*/ core__DOT__ex_mem_pl__DOT__mem_wenR;
-    CData/*0:0*/ core__DOT__ex_mem_pl__DOT__rf_wenR;
-    CData/*1:0*/ core__DOT__ex_mem_pl__DOT__wb_selR;
-    CData/*4:0*/ core__DOT__ex_mem_pl__DOT__wb_addrR;
-    CData/*4:0*/ core__DOT__mem_wb_pl__DOT__wb_addrR;
-    CData/*0:0*/ core__DOT__mem_wb_pl__DOT__rf_wenR;
-    CData/*1:0*/ core__DOT__mem_wb_pl__DOT__wb_selR;
-    IData/*31:0*/ core__DOT__if_id_pl__DOT__instR;
-    IData/*31:0*/ core__DOT__id_ex_pl__DOT__instR;
-    IData/*31:0*/ core__DOT__ex_mem_pl__DOT__instR;
-    IData/*31:0*/ core__DOT__mem_wb_pl__DOT__instR;
-    QData/*63:0*/ core__DOT__id_ex_pl_io_src_in_imm;
-    QData/*63:0*/ core__DOT__rf_io_channel_rdata2;
-    QData/*63:0*/ core__DOT__pc_reg;
-    QData/*63:0*/ core__DOT__pc_plus4;
-    QData/*63:0*/ core__DOT___alu_out_T_10;
-    QData/*63:0*/ core__DOT___alu_out_T_20;
-    QData/*63:0*/ core__DOT___wb_data_T_3;
-    QData/*63:0*/ core__DOT__if_id_pl__DOT__pcR;
-    QData/*63:0*/ core__DOT__id_ex_pl__DOT__pcR;
-    QData/*63:0*/ core__DOT__id_ex_pl__DOT__immR;
-    QData/*63:0*/ core__DOT__id_ex_pl__DOT__src1R;
-    QData/*63:0*/ core__DOT__id_ex_pl__DOT__src2R;
-    QData/*63:0*/ core__DOT__id_ex_pl__DOT__Dmem_wdataR;
-    QData/*63:0*/ core__DOT__ex_mem_pl__DOT__pcR;
-    QData/*63:0*/ core__DOT__ex_mem_pl__DOT__alu_outR;
-    QData/*63:0*/ core__DOT__ex_mem_pl__DOT__Dmem_wdataR;
-    QData/*63:0*/ core__DOT__mem_wb_pl__DOT__pcR;
-    QData/*63:0*/ core__DOT__mem_wb_pl__DOT__Dmem_rdataR;
-    QData/*63:0*/ core__DOT__mem_wb_pl__DOT__pcplus4R;
-    QData/*63:0*/ core__DOT__mem_wb_pl__DOT__aluR;
-    VlUnpacked<QData/*63:0*/, 32> core__DOT__rf__DOT__rfR;
+    CData/*0:0*/ Core__DOT__cenreg;
+    CData/*1:0*/ Core__DOT__ctriSigs_deco_2;
+    CData/*0:0*/ Core__DOT__exCtrlSigs_rfwen;
+    CData/*4:0*/ Core__DOT__exRd;
+    CData/*0:0*/ Core__DOT__ctrlSigsMem_rfwen;
+    CData/*4:0*/ Core__DOT__rdMem;
+    CData/*2:0*/ Core__DOT__ctrlSigsMem_wbdSel;
+    CData/*0:0*/ Core__DOT__ctrlSigsWb_rfwen;
+    CData/*4:0*/ Core__DOT__wbAddr;
+    CData/*2:0*/ Core__DOT__ctriSigs_deco_3;
+    CData/*2:0*/ Core__DOT__ctriSigs_deco_0;
+    CData/*0:0*/ Core__DOT__imm_sigBit;
+    CData/*0:0*/ Core__DOT__branchBus_flag;
+    CData/*0:0*/ Core__DOT__exCtrlSigs_memcen;
+    CData/*3:0*/ Core__DOT__exCtrlSigs_memwen;
+    CData/*0:0*/ Core__DOT__load_stall;
+    CData/*6:0*/ Core__DOT__exCtrlSigs_excTy;
+    CData/*2:0*/ Core__DOT__exCtrlSigs_wbdSel;
+    CData/*0:0*/ Core__DOT__ctrlSigsMem_memcen;
+    CData/*3:0*/ Core__DOT__ctrlSigsMem_memwen;
+    IData/*31:0*/ Core__DOT__If2IdInst;
+    IData/*31:0*/ Core__DOT__exInst;
+    IData/*31:0*/ Core__DOT__instMem;
+    IData/*31:0*/ Core__DOT__instWb;
+    QData/*63:0*/ Core__DOT__Alu_io_result;
+    QData/*63:0*/ Core__DOT__pcreg;
+    QData/*63:0*/ Core__DOT__seq_pc;
+    QData/*63:0*/ Core__DOT__If2IdPc;
+    QData/*63:0*/ Core__DOT__alu_resultMem;
+    QData/*63:0*/ Core__DOT__MemWbData;
+    QData/*63:0*/ Core__DOT__wbData;
+    QData/*63:0*/ Core__DOT___opVec_0_T;
+    QData/*63:0*/ Core__DOT___opVec_1_T_1;
+    QData/*63:0*/ Core__DOT___opVec_1_T;
+    QData/*63:0*/ Core__DOT___opVec_1_T_5;
+    QData/*63:0*/ Core__DOT__exOpVec_0;
+    QData/*63:0*/ Core__DOT__exOpVec_1;
+    QData/*63:0*/ Core__DOT__exPc;
+    QData/*63:0*/ Core__DOT__exStoreData;
+    QData/*63:0*/ Core__DOT__pcMem;
+    QData/*63:0*/ Core__DOT__storeDataMem;
+    QData/*63:0*/ Core__DOT__pcWb;
+    QData/*63:0*/ Core__DOT__Alu__DOT__op2;
+    QData/*63:0*/ Core__DOT__Alu__DOT___add_sub_result_T_1;
+    VlUnpacked<QData/*63:0*/, 32> Core__DOT__gpr;
 
     // LOCAL VARIABLES
-    CData/*0:0*/ __Vfunc_core__DOT__dpi__DOT__is_ebreak__0__Vfuncout;
+    CData/*0:0*/ __Vfunc_Core__DOT__dpi__DOT__is_ebreak__0__Vfuncout;
     CData/*0:0*/ __Vclklast__TOP__clock;
     VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
-    Vcore__Syms* vlSymsp;  // Symbol table
+    VCore__Syms* vlSymsp;  // Symbol table
 
     // CONSTRUCTORS
   private:
-    VL_UNCOPYABLE(Vcore___024root);  ///< Copying not allowed
+    VL_UNCOPYABLE(VCore___024root);  ///< Copying not allowed
   public:
-    Vcore___024root(const char* name);
-    ~Vcore___024root();
+    VCore___024root(const char* name);
+    ~VCore___024root();
 
     // INTERNAL METHODS
-    void __Vconfigure(Vcore__Syms* symsp, bool first);
+    void __Vconfigure(VCore__Syms* symsp, bool first);
 } VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
 
 //----------

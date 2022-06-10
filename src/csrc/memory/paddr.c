@@ -12,7 +12,7 @@ static void pmem_write(paddr_t addr , int len , word_t data) {
     host_write(guest_to_host(addr),len ,data);
 }
 static void out_of_bound(paddr_t addr) {
-    //printf("function : out of bound\n");
+    // ("out of bound\n");
     return ;
 }
 
