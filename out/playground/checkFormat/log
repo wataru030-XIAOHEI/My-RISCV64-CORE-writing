@@ -1,11 +1,14 @@
-Checking format of 10 Scala sources
+Checking format of 13 Scala sources
 DanglingParentheses: top-level presets deprecated; use 'preset' subsection
 parsed config (v2.6.4): /home/wataru/Desktop/ysyx-workbench/npc/.scalafmt.conf
-/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/RF.scala
-/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/core.scala
-/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Mem.scala
-/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/dpi.scala
-/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Bus/IO.scala
-/home/wataru/Desktop/ysyx-workbench/npc/playground/src/constant/Inst.scala
-/home/wataru/Desktop/ysyx-workbench/npc/playground/src/constant/Consts.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Alu.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Core.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Bru.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Decoder.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/rf.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Compents/dpi.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Compents/PortBus.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Const/Inst.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Const/Consts.scala
+/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Config/Config.scala
 /home/wataru/Desktop/ysyx-workbench/npc/playground/src/Elaborate.scala

@@ -1,2 +1,21 @@
-[0m[[0m[0minfo[0m] [0m[0mcompiling 3 Scala sources to /home/wataru/Desktop/ysyx-workbench/npc/out/playground/compile/dest/classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 13 Scala sources to /home/wataru/Desktop/ysyx-workbench/npc/out/playground/compile/dest/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Const/Consts.scala:8:16: implicit conversion method uintToBitPat should be enabled[0m
+[0m[[0m[33mwarn[0m] [0m[0mby making the implicit value scala.language.implicitConversions visible.[0m
+[0m[[0m[33mwarn[0m] [0m[0m----[0m
+[0m[[0m[33mwarn[0m] [0m[0mThis can be achieved by adding the import clause 'import scala.language.implicitConversions'[0m
+[0m[[0m[33mwarn[0m] [0m[0mor by setting the compiler option -language:implicitConversions.[0m
+[0m[[0m[33mwarn[0m] [0m[0mSee the Scaladoc for value scala.language.implicitConversions for a discussion[0m
+[0m[[0m[33mwarn[0m] [0m[0mwhy the feature should be explicitly enabled.[0m
+[0m[[0m[33mwarn[0m] [0m[0m  implicit def uintToBitPat(x:UInt) : BitPat = BitPat(x)[0m
+[0m[[0m[33mwarn[0m] [0m[0m               ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/wataru/Desktop/ysyx-workbench/npc/playground/src/Core/Decoder.scala:77:32: postfix operator zipWithIndex should be enabled[0m
+[0m[[0m[33mwarn[0m] [0m[0mby making the implicit value scala.language.postfixOps visible.[0m
+[0m[[0m[33mwarn[0m] [0m[0m----[0m
+[0m[[0m[33mwarn[0m] [0m[0mThis can be achieved by adding the import clause 'import scala.language.postfixOps'[0m
+[0m[[0m[33mwarn[0m] [0m[0mor by setting the compiler option -language:postfixOps.[0m
+[0m[[0m[33mwarn[0m] [0m[0mSee the Scaladoc for value scala.language.postfixOps for a discussion[0m
+[0m[[0m[33mwarn[0m] [0m[0mwhy the feature should be explicitly enabled.[0m
+[0m[[0m[33mwarn[0m] [0m[0m      for((values,i) <- values zipWithIndex)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                               ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
 [0m[[0m[0minfo[0m] [0m[0mdone compiling[0m

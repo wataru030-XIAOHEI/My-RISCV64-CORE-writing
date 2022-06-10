@@ -11,17 +11,17 @@
 #include "verilated_heavy.h"
 #include "svdpi.h"
 
-class Vcore__Syms;
-class Vcore___024root;
+class VCore__Syms;
+class VCore___024root;
 class VerilatedVcdC;
-class Vcore_VerilatedVcd;
+class VCore_VerilatedVcd;
 
 
 // This class is the main interface to the Verilated model
-class Vcore VL_NOT_FINAL {
+class VCore VL_NOT_FINAL {
   private:
     // Symbol table holding complete model state (owned by this class)
-    Vcore__Syms* const vlSymsp;
+    VCore__Syms* const vlSymsp;
 
   public:
 
@@ -30,18 +30,21 @@ class Vcore VL_NOT_FINAL {
     // propagate new values into/out from the Verilated model.
     VL_IN8(&clock,0,0);
     VL_IN8(&reset,0,0);
-    VL_OUT8(&io_Imemio_cen,0,0);
-    VL_OUT64(&io_Imemio_pc,63,0);
-    VL_IN(&io_Imemio_inst,31,0);
-    VL_OUT(&io_DMemio_addr,31,0);
-    VL_IN64(&io_DMemio_rdata,63,0);
-    VL_OUT8(&io_DMemio_wen,0,0);
-    VL_OUT64(&io_DMemio_wdata,63,0);
-    VL_OUT8(&io_Deubug_Debug_rf_wen,0,0);
-    VL_OUT8(&io_Deubug_Debug_rf_waddr,4,0);
-    VL_OUT64(&io_Deubug_Debug_rf_wdata,63,0);
-    VL_OUT64(&io_Deubug_Debug_pc,63,0);
-    VL_OUT(&io_Deubug_Debug_inst,31,0);
+    VL_OUT64(&io_debug_debugPc,63,0);
+    VL_OUT(&io_debug_debugInst,31,0);
+    VL_OUT8(&io_debug_debugwen,0,0);
+    VL_OUT8(&io_debug_debugwaddr,4,0);
+    VL_OUT64(&io_debug_debugdata,63,0);
+    VL_OUT64(&io_imem_addr,63,0);
+    VL_IN(&io_imem_rdata,31,0);
+    VL_OUT8(&io_imem_cen,0,0);
+    VL_OUT8(&io_imem_wen,0,0);
+    VL_OUT64(&io_imem_wdata,63,0);
+    VL_OUT64(&io_dmem_addr,63,0);
+    VL_IN64(&io_dmem_rdata,63,0);
+    VL_OUT8(&io_dmem_cen,0,0);
+    VL_OUT8(&io_dmem_wen,0,0);
+    VL_OUT64(&io_dmem_wdata,63,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.
@@ -49,19 +52,19 @@ class Vcore VL_NOT_FINAL {
 
     // Root instance pointer to allow access to model internals,
     // including inlined /* verilator public_flat_* */ items.
-    Vcore___024root* const rootp;
+    VCore___024root* const rootp;
 
     // CONSTRUCTORS
     /// Construct the model; called by application code
     /// If contextp is null, then the model will use the default global context
     /// If name is "", then makes a wrapper with a
     /// single model invisible with respect to DPI scope names.
-    explicit Vcore(VerilatedContext* contextp, const char* name = "TOP");
-    explicit Vcore(const char* name = "TOP");
+    explicit VCore(VerilatedContext* contextp, const char* name = "TOP");
+    explicit VCore(const char* name = "TOP");
     /// Destroy the model; called (often implicitly) by application code
-    virtual ~Vcore();
+    virtual ~VCore();
   private:
-    VL_UNCOPYABLE(Vcore);  ///< Copying not allowed
+    VL_UNCOPYABLE(VCore);  ///< Copying not allowed
 
   public:
     // API METHODS
