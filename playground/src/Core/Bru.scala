@@ -17,6 +17,5 @@ class Bru  {
       B_BGE   -> (op1.asSInt()  >= op2.asSInt()),
       B_BGEU  -> (op1.asUInt()  >= op2.asUInt())
     ))
-
   }
 }

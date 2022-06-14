@@ -7,7 +7,8 @@ import Const.Consts.{ALU_OUT, B, I, J, LOAD_DATA, R, S, U, Z, excTyWD, wbdatasel
 import Const.Inst.{JAL, JALR, LW, NOP}
 import chisel3._
 import chisel3.util._
-
+import Compents.MyUtils
+import Compents.MyUtils.handShake
 
 
 class Core extends Module with GoParameter{
@@ -27,6 +28,7 @@ class Core extends Module with GoParameter{
   val load_stall : Bool = Wire(Bool())
   val MultDivStall : Bool = Wire(Bool())
   val flush     : Bool = Wire(Bool())
+
   MultDivStall := false.B
   flush := false.B
 
@@ -34,13 +36,20 @@ class Core extends Module with GoParameter{
   io.imem.wdata := 0.U(XLEN.W)
 
 
+  //----------------initial over -----------------------------------
 
+  //=====hand shake in pipeline stage =====
+  val hd          = VecInit(Seq.fill(5){ handShake })
+  val if_HShake   = hd(0)
 
-
-
-
+  val id_HShake   = hd(1)
+  val ex_HShake   = hd(2) 
+  val mem_HShake  = handShake
+  val wb_HShake   = handShake
   //=====if ======================
 
+  if_HShake.ready := !load_stall && !MultDivStall   
+  if_HShake.valid := true.B
   val branchBus = Wire(new BranchBus)
   val pcreg     : UInt = RegInit(rstValue)
   val cenreg    : Bool = RegInit(false.B)
@@ -49,10 +58,10 @@ class Core extends Module with GoParameter{
   val seq_pc    : UInt = pcreg + 4.U(XLEN.W)
   val next_pc   : UInt = Wire(UInt(XLEN.W))
   next_pc := Mux(branchBus.flag,branchBus.target,seq_pc)
-  
-  when(cenreg === true.B){
-      when(!load_stall && !MultDivStall){
-      pcreg := next_pc
+
+  when(cenreg === true.B ){
+    when(if_HShake.ready && if_HShake.valid){
+      pcreg := next_pc 
     }
   }
   cenreg := true.B
@@ -68,18 +77,22 @@ class Core extends Module with GoParameter{
 
 
   //================IDU============================
+  id_HShake.ready := !(load_stall || MultDivStall)
+  id_HShake.valid := !( branchBus.Cancel || flush )
+
+
   val If2IdPc   :UInt  =   RegInit(0.U(XLEN.W))
   val If2IdInst :UInt  =   RegInit(NOP)
   //cancel
-  when(branchBus.Cancel || flush) {
-    If2IdPc     := 0.U(XLEN.W)
-    If2IdInst   := NOP
-  }.elsewhen(load_stall){
-    If2IdPc     := If2IdPc
-    If2IdInst   := If2IdInst
-  } otherwise {
-    If2IdPc     := pcreg
-    If2IdInst   := if_inst
+  when( !(id_HShake.valid) ){
+    If2IdPc := 0.U(XLEN.W)
+    If2IdInst := NOP 
+  }.elsewhen( !(id_HShake.ready)){
+    If2IdInst := If2IdInst 
+    If2IdPc   := If2IdPc
+  }otherwise{
+    If2IdInst := if_inst 
+    If2IdPc   := pcreg
   }
 
   val id_pc   : UInt = If2IdPc     //id stage pc
@@ -138,29 +151,36 @@ class Core extends Module with GoParameter{
 
 
   //===============EXU ========================
+  ex_HShake.valid := true.B 
+  ex_HShake.ready := !MultDivStall
   val exCtrlSigs  = RegInit(nopctrl)
   val exOpVec     = RegInit(VecInit(0.U(XLEN.W),0.U(XLEN.W)))
   val exPc        = RegInit(0.U(XLEN.W))
   val exInst      = RegInit(NOP)
   val exRd        = RegInit(0.U(5.W))
   val exStoreData = RegInit(0.U(XLEN.W))
-
-  when( flush || load_stall) {
-    exCtrlSigs  := nopctrl
-    exOpVec     := VecInit(0.U(XLEN.W), 0.U(XLEN.W))
+  when(!ex_HShake.ready){
+    exCtrlSigs  := exCtrlSigs 
+    exOpVec     := exOpVec
+    exPc        := exPc 
+    exInst      := exInst
+    exRd        := exRd 
+    exStoreData := exStoreData
+  }.elsewhen(!ex_HShake.valid){
+    exCtrlSigs  := nopctrl 
+    exOpVec     := VecInit(0.U(XLEN.W),0.U(XLEN.W))
     exPc        := 0.U(XLEN.W)
     exInst      := NOP
     exRd        := 0.U(5.W)
     exStoreData := 0.U(XLEN.W)
-  }.otherwise{
+  }otherwise{
     exCtrlSigs  := ctriSigs
     exOpVec     := opVec
-    exPc        := id_pc
-    exInst      := id_inst
+    exPc        := id_pc 
+    exInst      := id_inst 
     exRd        := rd
     exStoreData := storeData
   }
-
   //======alu ============
   val alu = Module( new Alu(XLEN) ).io
   alu.excTy := exCtrlSigs.excTy
@@ -177,37 +197,29 @@ class Core extends Module with GoParameter{
   exBypassing.waddr := exRd
   exBypassing.wr := alu_result
   //==========MEM ============================
+  mem_HShake.valid := true.B
+  mem_HShake.ready := !MultDivStall 
   val ctrlSigsMem     = RegInit(nopctrl)
   val alu_resultMem   = RegInit(0.U(XLEN.W))
   val rdMem           = RegInit(0.U(5.W))
   val pcMem           = RegInit(0.U(XLEN.W))
   val instMem         = RegInit(NOP)
   val storeDataMem    = RegInit(0.U(XLEN.W))
-
-  when(flush){
-    ctrlSigsMem   := nopctrl
-    alu_resultMem := 0.U(XLEN.W)
-    rdMem         := 0.U(5.W)
-    pcMem         := 0.U(XLEN.W)
-    instMem       := NOP
-    storeDataMem  := 0.U(XLEN.W)
-
-  }.elsewhen(!MultDivStall){
-    ctrlSigsMem   := exCtrlSigs
-    alu_resultMem := alu_result
-    rdMem         := exRd
-    pcMem         := exPc
-    instMem       := exInst
-    storeDataMem  := exStoreData
+  when(!mem_HShake.ready){
+    ctrlSigsMem     := ctrlSigsMem 
+    alu_resultMem   := alu_resultMem
+    rdMem           := rdMem
+    pcMem           := pcMem
+    instMem         := instMem
+    storeDataMem    := storeDataMem
   }otherwise{
-    ctrlSigsMem   := ctrlSigsMem
-    alu_resultMem := alu_resultMem
-    rdMem         := rdMem
-    pcMem         := pcMem
-    instMem       := instMem
-    storeDataMem  := storeDataMem
+    ctrlSigsMem     := exCtrlSigs
+    alu_resultMem   := alu_result
+    pcMem           := exPc
+    instMem         := exInst
+    storeDataMem    := exStoreData
+    rdMem           := exRd   
   }
-
   //======lsu=======
   io.dmem.cen := ctrlSigsMem.memcen
   io.dmem.wen := ctrlSigsMem.memwen =/= 0.U
@@ -224,23 +236,25 @@ class Core extends Module with GoParameter{
   memBypassing.waddr := rdMem
   memBypassing.wen := ctrlSigsMem.rfwen
   //============WBU========================
+  wb_HShake.valid := true.B 
+  wb_HShake.ready := true.B
   val ctrlSigsWb  = RegInit(nopctrl)
   val pcWb        = RegInit(0.U(XLEN.W))
   val instWb      = RegInit(NOP)
   val wbData      = RegInit(0.U(XLEN.W))
   val wbAddr      = RegInit(0.U(5.W))
-  when(flush){
-    ctrlSigsWb    := nopctrl
-    pcWb          := 0.U(XLEN.W)
-    instWb        := NOP
-    wbData        := 0.U(XLEN.W)
-    wbAddr        := 0.U(5.W)
-  }otherwise{
+  when(wb_HShake.valid ){
     ctrlSigsWb    := ctrlSigsMem
     pcWb          := pcMem
     instWb        := instMem
     wbData        := MemWbData
     wbAddr        := rdMem
+  }otherwise{
+    ctrlSigsWb    := nopctrl
+    pcWb          := 0.U(XLEN.W)
+    instWb        := NOP
+    wbData        := 0.U(XLEN.W)
+    wbAddr        := 0.U(5.W)
   }
 
   wbBypassing.wen := ctrlSigsWb.rfwen
