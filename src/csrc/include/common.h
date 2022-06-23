@@ -15,7 +15,7 @@ typedef unsigned char u8 ;
 typedef u32 half_word ;
 typedef u64 word_t ;
 typedef u64 paddr_t ;
-typedef u64 vadr_t ;
+typedef u64 vaddr_t ;
 
 #define MEMORY_BASE     0x80000000
 #define PC_RESET_OFFSET 0x0

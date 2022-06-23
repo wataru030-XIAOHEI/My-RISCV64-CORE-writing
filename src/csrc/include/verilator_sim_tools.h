@@ -38,6 +38,9 @@ void write_ref_npc_cpu(){
     npc_cpu.gpr[MUX((!(top->io_debug_debugwaddr)),(word_t)0,top->io_debug_debugwaddr)] 
         = top->io_debug_debugdata ; 
     npc_cpu.pc = top->io_debug_debugPc ;
+    }else{
+        npc_cpu.gpr[top->io_debug_debugwaddr] = npc_cpu.gpr[top->io_debug_debugwaddr];
+        npc_cpu.pc = top->io_debug_debugPc ;
     }
 }
 #endif
@@ -103,10 +106,25 @@ void printf_debug_info() {
     #endif 
     }
 }
+void lsu(void){
+    if(top->clock == 1 ){
+        if(top->io_dmem_cen){
+            if(top->io_dmem_wen != 0x0){
+                store(&top->io_dmem_addr,top->io_dmem_wen,top->io_dmem_wdata);
+                printf("store addr: 0x%016lx ,store data : 0x%016lx ,len : %d\n" ,top->io_dmem_addr, top->io_dmem_wdata , top->io_dmem_wen);
+            }else{
+                top->io_dmem_rdata = load(&top->io_dmem_addr,8);
+                printf("debug pc ==> 0x%016lx ,", top->io_debug_debugPc);
+                printf("load addr :0x%06lx\n",top->io_dmem_addr);
+            }
+        }
+    }
+}
 void excute_once () {
     contextp->timeInc(1);  // 1 timeprecision period passes...
     eval_clk(); 
-    restart_npc(); 
+    restart_npc();
+    lsu(); 
     printf_debug_info();
     //======ITRACE ============
     #ifdef CONFIG_ITRACE

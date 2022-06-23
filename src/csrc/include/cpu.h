@@ -5,6 +5,8 @@
 // char logbuf[128] ;
 u32 inst_fetch(paddr_t *pc, int len);
 
+void store(vaddr_t *addr , int len ,u64 data);
+u64 load(vaddr_t *addr , int len);
 
 typedef struct{
     paddr_t pc ;

@@ -30,3 +30,11 @@ void paddr_write(paddr_t addr , int len ,word_t data ) {
     if(likely(in_pmem(addr))) {pmem_write(addr,len,data); return;}
     out_of_bound(addr); 
 }
+
+
+word_t vaddr_read(vaddr_t addr , int len ){
+    return paddr_read(addr,len);
+}
+void vaddr_write(vaddr_t addr , int len ,word_t data ){
+    paddr_write(addr, len , data );
+}

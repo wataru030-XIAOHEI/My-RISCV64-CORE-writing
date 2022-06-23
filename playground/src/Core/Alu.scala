@@ -55,7 +55,13 @@ class Alu (XLEN : Int ) extends Module {
 
   logicShiftResult := MuxLookup(io.excTy,0.U(XLEN.W),Seq(
     excSLT    -> ( op1.asSInt() < op2.asSInt() ) ,
-    excSLTU   -> ( op1.asUInt() < op2.asUInt() )
+    excSLTU   -> ( op1.asUInt() < op2.asUInt() ) ,
+    excSLL    -> ( op1.asUInt() << op2(5,0))(63,0),
+    excSRL    -> ( op1.asUInt() >> op2(5,0)).asUInt,
+    excSRA    -> ( op1.asSInt() >> op2(5,0)).asUInt,
+    excOR     -> ( op1.asUInt   |  op2.asUInt() ),
+    excXOR    -> ( op1.asUInt   ^  op2.asUInt() ),  
+    excAND    -> ( op1.asUInt   &  op2.asUInt() )
   ))
 
   io.result := MuxCase(add_sub_result,Seq(
