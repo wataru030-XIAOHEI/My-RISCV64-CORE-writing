@@ -7,23 +7,24 @@
 #ifdef CONFIG_VCD_TRACE_COND
 #include <verilated_vcd_c.h>
 #endif 
-#include "svdpi.h"
-#include "VCore__Dpi.h"
+
 #include "VCore.h"
 #include "common.h"
 #include "utils.h"
 #include "cpu.h"
 
 static char logbuf[128];
+// void hit_trap(CPU_T npc );
 CPU_T npc_cpu ;
-
 void print_gpr(){
+    printf(COLOR_FONT "==========================gpr's result ===========================" END_FONT );
     putchar('\n');
     for(int i = 1 ; i < 33 ;i++){
         printf(COLOR_FONT "   ""gpr[%2d] :" " 0x%016lx " END_FONT ,i-1,npc_cpu.gpr[i-1] );
         if( i%4==0 || i == 32 ) putchar('\n');
-        if(i == 32 )putchar('\n');
+        // if(i == 32 )putchar('\n');
     }
+    printf(COLOR_FONT "==================================================================" END_FONT "\n");
 }
 
 const std::unique_ptr<VerilatedContext> contextp(new VerilatedContext);
@@ -90,7 +91,7 @@ void restart_npc() {//reset and after reset
 void printf_debug_info() {
     if(top->clock == 1 && top->io_imem_cen==1 && 
     top->io_debug_debugInst != EBREAK && top->io_debug_debugwen && top->io_debug_debugPc != 0x0 ){
-
+    #ifdef PTR_EXCUTE
         VL_PRINTF(FRONT_FONT "debug_pc is " FMT_WORD " " \
                     ",debug_inst is " FMT_HWORD  " "\
                     ", debug_waddr is 0x%02x" \
@@ -99,6 +100,7 @@ void printf_debug_info() {
             top->io_debug_debugPc,top->io_debug_debugInst,\
             top->io_debug_debugwaddr,top->io_debug_debugdata
             );
+    #endif 
     }
 }
 void excute_once () {
@@ -145,8 +147,7 @@ void vsim_final() {
     #endif
 
     #ifdef CONFIG_DIFF_COND
-    print_gpr(); 
-    #endif
+    #endif 
     top->final();
 }
 

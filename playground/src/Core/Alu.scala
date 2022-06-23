@@ -1,6 +1,6 @@
 package Core
 import Const.Consts._
-import Core.Alu.{isSub, islogicorshift, sext, zext}
+import Core.Alu.{isSub, islogicorshift, sextBits, zext}
 import chisel3._
 import chisel3.util._
 object Alu {
@@ -11,9 +11,14 @@ object Alu {
    * @param data 要继续有符号拓展的数
    * @return
    */
-  def sext(data : UInt ) : UInt = {
+//  def mysext(data : UInt ) : UInt = {
+//    val ret = Wire(UInt(64.W))
+//    ret := Cat( Fill( data.getWidth-32, data(31) ), data(31,0) )
+//    ret
+//  }
+  def sextBits(data : UInt , Bits : Int  = 32 ) :UInt = {
     val ret = Wire(UInt(64.W))
-    ret := Cat( Fill( data.getWidth-32, data(31) ), data(31,0) )
+    ret := Cat( Fill( data.getWidth - Bits , data(Bits - 1)) , data(Bits-1,0) )
     ret
   }
 
@@ -22,9 +27,11 @@ object Alu {
    * @param data 要继续无符号拓展的数
    * @return
    */
-  def zext(data : UInt) : UInt = {
+  def zext(data : UInt ,Bits : Int = 32 ) : UInt = {
     val ret = Wire(UInt(64.W))
-    ret := Cat(0.U(32.W),data(31,0))
+//    ret := Cat(0.U(32.W),data(31,0))
+//    ret
+    ret := Cat(0.U((data.getWidth - Bits).W),data(Bits-1,0))
     ret
   }
 }
@@ -43,7 +50,7 @@ class Alu (XLEN : Int ) extends Module {
   add_sub_result := MuxLookup(io.excTy,0.U(XLEN.W),Seq(
     excADD  ->  ( op1 + op2 ) ,
     excSUB  ->  ( op1 + op2 ) ,
-    excADDW ->  sext( op1 + op2 )
+    excADDW ->  sextBits( op1 + op2 )
   ))
 
   logicShiftResult := MuxLookup(io.excTy,0.U(XLEN.W),Seq(

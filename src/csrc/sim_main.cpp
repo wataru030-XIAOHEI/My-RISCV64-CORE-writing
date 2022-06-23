@@ -13,7 +13,7 @@
 // #include <common/common.h>
 
 
-
+svBit is_ebreak(int inst);
 // #include <assert.h>
 
 // extern void sdb_mainloop();
@@ -38,13 +38,7 @@ void init_isa();
 #endif
 
 
-svBit is_ebreak(int inst){//DPI-C
-    if(inst == EBREAK){
-        printf("\n\33[1;34mebreak!\33[0m\n");
-        return 1;
-    }
-    return 0;
-}
+
 #ifdef TARGET_AM 
     void welcomeAM(){
         printf("\n\33[1;34muse the img from AM !\33[0m\n");

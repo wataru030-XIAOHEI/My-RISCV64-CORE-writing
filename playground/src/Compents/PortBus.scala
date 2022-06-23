@@ -26,7 +26,7 @@ class DMemIO(datawidth : Int) extends Bundle {
   val addr = Output(UInt(64.W))
   val rdata = Input(UInt(datawidth.W))
   val cen   = Output(Bool())
-  val wen   = Output(Bool())
+  val wen   = Output(UInt(4.W))
   val wdata = Output(UInt(64.W))
 }
 
@@ -37,7 +37,7 @@ class bypass() extends Bundle {
   val waddr = UInt(5.W)
 }
 class BranchBus extends Bundle  {
-  val flag  :Bool   = (Bool())
-  val target :UInt  = (UInt(64.W))
-  val Cancel :Bool  = (Bool())
+  val flag  :Bool   = Bool()
+  val target :UInt  = UInt(64.W)
+  val Cancel :Bool  = Bool()
 }

@@ -9,15 +9,58 @@ import Const.util._
 class IDecoder {
 
   val table : Array[(BitPat,List[BitPat])]= Array(
-    ADDI  ->  List(I,excADD , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
     AUIPC ->  List(U,excADD , PC  ,   ZERO2 , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
     LUI   ->  List(U,excADD , ZERO1,  IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+
+    ADDI  ->  List(I,excADD , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    ADDIW ->  List(I,excADDW, RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SLTI  ->  List(I,excSLT , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SLTIU ->  List(I,excSLTU, RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    XORI  ->  List(I,excXOR , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    ANDI  ->  List(I,excADD , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SLLI  ->  List(I,excSLL , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SLLIW ->  List(I,excSLLW, RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT,   CSRX , Valid , BX    ),
+    SRLI  ->  List(I,excSRL , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SRLIW ->  List(I,excSRLW, RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SRAI  ->  List(I,excSRA , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SRAIW ->  List(I,excSRAW, RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+
+    ADD   ->  List(R,excADD , RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    ADDW  ->  List(R,excADDW, RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SUB   ->  List(R,excSUB , RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SUBW  ->  List(R,excSUBW, RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SLT   ->  List(R,excSLT , RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SLTU  ->  List(R,excSLTU, RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SLL   ->  List(R,excSLL , RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SLLW  ->  List(R,excSLLW, RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SRL   ->  List(R,excSRL , RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SRLW  ->  List(R,excSRLW, RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SRA   ->  List(R,excSRA , RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    SRAW  ->  List(R,excSRAW, RS1 ,   RS2   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+
     JAL   ->  List(J,excADD , PC  ,   PLUS4 , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
     JALR  ->  List(I,excADD , PC  ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+
+
     BEQ   ->  List(B,excADD , ZERO1,  ZERO2 , DISEN  , memwenX , DISEN, wbdataX ,  CSRX , Valid , B_BEQ ),
-    LW    ->  List(I,excADD , RS1 ,   IMM   , WEN    , memwenX , WEN  , LOAD_DATA, CSRX,  Valid , BX    ),
-    SW    ->  List(I,excADD,  RS1 ,   IMM   , WEN    , FourByte, DISEN, wbdataX ,  CSRX,  Valid , BX    ),
-    SD    ->  List(S,excADD,  RS1 ,   IMM   , WEN    , FourByte, DISEN, wbdataX ,  CSRX,  Valid , BX    )
+    BNE   ->  List(B,excADD , ZERO1,  ZERO2 , DISEN  , memwenX , DISEN, wbdataX ,  CSRX , Valid , B_BNE ),
+    BLT   ->  List(B,excADD , ZERO1,  ZERO2 , DISEN  , memwenX , DISEN, wbdataX ,  CSRX , Valid , B_BLT ),
+    BGE   ->  List(B,excADD , ZERO1,  ZERO2 , DISEN  , memwenX , DISEN, wbdataX ,  CSRX , Valid , B_BGE ),
+    BLTU  ->  List(B,excADD , ZERO1,  ZERO2 , DISEN  , memwenX , DISEN, wbdataX ,  CSRX , Valid , B_BLTU),
+    BGEU  ->  List(B,excADD , ZERO1,  ZERO2 , DISEN  , memwenX , DISEN, wbdataX ,  CSRX , Valid , B_BGEU),
+
+
+    LB    ->  List(I,excADD , RS1  ,  IMM   , CEN    , memwenX , WEN  , lbData  ,  CSRX , Valid , BX    ),
+    LBU   ->  List(I,excADD , RS1  ,  IMM   , CEN    , memwenX , WEN  , lbuData ,  CSRX , Valid , BX    ),
+    LH    ->  List(I,excADD , RS1  ,  IMM   , CEN    , memwenX , WEN  , lhData  ,  CSRX , Valid , BX    ),
+    LHU   ->  List(I,excADD , RS1  ,  IMM   , CEN    , memwenX , WEN  , lhuData ,  CSRX , Valid , BX    ),
+    LW    ->  List(I,excADD , RS1  ,  IMM   , CEN    , memwenX , WEN  , lwData  ,  CSRX , Valid , BX    ),
+    LWU   ->  List(I,excADD , RS1  ,  IMM   , CEN    , memwenX , WEN  , lwuData ,  CSRX , Valid , BX    ),
+    LD    ->  List(I,excADD , RS1  ,  IMM   , CEN    , memwenX , WEN  , ldData  ,  CSRX , Valid , BX    ),
+    SB    ->  List(S,excADD , RS1  ,  IMM   , CEN    , OneByte , DISEN, wbdataX ,  CSRX , Valid , BX    ),
+    SH    ->  List(S,excADD , RS1  ,  IMM   , CEN    , TwoByte , DISEN, wbdataX ,  CSRX , Valid , BX    ),
+    SW    ->  List(S,excADD,  RS1  ,  IMM   , CEN    , FourByte, DISEN, wbdataX ,  CSRX,  Valid , BX    ),
+    SD    ->  List(S,excADD,  RS1  ,  IMM   , CEN    , EighByte, DISEN, wbdataX ,  CSRX,  Valid , BX    )
   )
 
 }
@@ -39,7 +82,7 @@ class CtrlSigsGen extends Bundle {
 //                                               excetype         memcen              wbdatasel        inst is valid ?  //
 //                                       instrtype  |   op1,2 sel   |  memwen   rfwen   |     csrinstr |                //
 //                                           |      |     |    |    |     |       |     |      |       |     branch ?   //
-/**/  def defaultTable : List[BitPat] = List(X,   excX,op1X,op2X,DISEN,memwenX, DISEN,wbdataX,CSRX,  Valid , BX)       //
+/**/  def defaultTable : List[BitPat] = List(X,   excX,op1X,op2X,DISEN,memwenX, DISEN,wbdataX,CSRX,  Invalid , BX)       //
 //======================================================================================================================//
   def dcr(inst : UInt , table : Iterable[(BitPat,List[BitPat])]) : CtrlSigsGen  = { //decoder
     val deco = CtrlSigsDecode(inst,defaultTable,mappinIn = table)

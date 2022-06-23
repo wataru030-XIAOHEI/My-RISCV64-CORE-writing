@@ -3,12 +3,13 @@ package Core
 
 import Compents.{BranchBus, DMemIO, DebugIO, IMemIO, bypass, dpi}
 import Config.GoParameter
-import Const.Consts.{ALU_OUT, B, I, J, LOAD_DATA, R, S, U, Z, excTyWD, wbdataselWD}
+import Const.Consts.{ALU_OUT, B, EighByte, FourByte, I, J, OneByte, R, S, TwoByte, U, Z, excTyWD, lbData, lbuData, ldData, lhData, lhuData, lwData, lwuData, wbdataselWD}
 import Const.Inst.{JAL, JALR, LW, NOP}
 import chisel3._
 import chisel3.util._
 import Compents.MyUtils
 import Compents.MyUtils.handShake
+import Core.Alu.{sextBits, zext}
 
 
 class Core extends Module with GoParameter{
@@ -34,21 +35,21 @@ class Core extends Module with GoParameter{
 
   io.imem.wen := false.B
   io.imem.wdata := 0.U(XLEN.W)
-
-
-  //----------------initial over -----------------------------------
-
   //=====hand shake in pipeline stage =====
   val hd          = VecInit(Seq.fill(5){ handShake })
   val if_HShake   = hd(0)
 
   val id_HShake   = hd(1)
-  val ex_HShake   = hd(2) 
+  val ex_HShake   = hd(2)
   val mem_HShake  = handShake
   val wb_HShake   = handShake
+
+  //----------------initial over -----------------------------------
+
+
   //=====if ======================
 
-  if_HShake.ready := !load_stall && !MultDivStall   
+  if_HShake.ready := id_HShake.ready
   if_HShake.valid := true.B
   val branchBus = Wire(new BranchBus)
   val pcreg     : UInt = RegInit(rstValue)
@@ -151,7 +152,7 @@ class Core extends Module with GoParameter{
 
 
   //===============EXU ========================
-  ex_HShake.valid := true.B 
+  ex_HShake.valid := !load_stall
   ex_HShake.ready := !MultDivStall
   val exCtrlSigs  = RegInit(nopctrl)
   val exOpVec     = RegInit(VecInit(0.U(XLEN.W),0.U(XLEN.W)))
@@ -198,7 +199,7 @@ class Core extends Module with GoParameter{
   exBypassing.wr := alu_result
   //==========MEM ============================
   mem_HShake.valid := true.B
-  mem_HShake.ready := !MultDivStall 
+  mem_HShake.ready := !MultDivStall
   val ctrlSigsMem     = RegInit(nopctrl)
   val alu_resultMem   = RegInit(0.U(XLEN.W))
   val rdMem           = RegInit(0.U(5.W))
@@ -222,21 +223,34 @@ class Core extends Module with GoParameter{
   }
   //======lsu=======
   io.dmem.cen := ctrlSigsMem.memcen
-  io.dmem.wen := ctrlSigsMem.memwen =/= 0.U
-  io.dmem.wdata := storeDataMem
+  io.dmem.wen := ctrlSigsMem.memwen
+//  io.dmem.wdata := storeDataMem
+  io.dmem.wdata := MuxLookup(ctrlSigsMem.memwen,storeDataMem,Seq(
+    OneByte ->  Cat(0.U(56.W),storeDataMem( 7,0)),
+    TwoByte ->  Cat(0.U(48.W),storeDataMem(15,0)),
+    FourByte->  Cat(0.U(32.W),storeDataMem(31,0)),
+    EighByte->  storeDataMem
+  ))
   io.dmem.addr := alu_resultMem
+
   val loadData :UInt = io.dmem.rdata
   val MemWbData : UInt = Wire(UInt(XLEN.W))
 
   MemWbData := MuxLookup(ctrlSigsMem.wbdSel,alu_resultMem,Seq(
     ALU_OUT   -> alu_resultMem ,
-    LOAD_DATA -> loadData
+    ldData    -> loadData       ,
+    lbData    -> sextBits(loadData,8),
+    lbuData   -> zext(loadData,8),
+    lhData    -> sextBits(loadData,16),
+    lhuData   -> zext(loadData,16),
+    lwData    -> sextBits(loadData),
+    lwuData   -> zext(loadData)
   ))
   memBypassing.wr := MemWbData
   memBypassing.waddr := rdMem
   memBypassing.wen := ctrlSigsMem.rfwen
   //============WBU========================
-  wb_HShake.valid := true.B 
+  wb_HShake.valid := true.B
   wb_HShake.ready := true.B
   val ctrlSigsWb  = RegInit(nopctrl)
   val pcWb        = RegInit(0.U(XLEN.W))
@@ -264,8 +278,9 @@ class Core extends Module with GoParameter{
 
   //=====dpi-c=====
   val Dpi = Module(new dpi).io
-  Dpi.inst := io.debug.debugInst
-
+  Dpi.inst    := io.debug.debugInst
+  Dpi.pc      := io.debug.debugPc  
+  Dpi.gpr_a0  := gpr.read(10.U(5.W))
   //============DEBUG==============
   io.debug.debugPc    := pcWb
   io.debug.debugInst  := instWb

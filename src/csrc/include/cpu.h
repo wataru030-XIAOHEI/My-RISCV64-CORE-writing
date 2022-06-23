@@ -8,7 +8,7 @@ u32 inst_fetch(paddr_t *pc, int len);
 
 typedef struct{
     paddr_t pc ;
-    word_t gpr[32] ;
+    word_t  gpr[32] ;
 }CPU_T ;
-
+// extern CPU_T npc_cpu ;
 #endif

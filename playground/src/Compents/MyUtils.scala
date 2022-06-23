@@ -6,6 +6,6 @@ object MyUtils  {
 }
 
 class HandShake extends Bundle  {
-  val ready : Bool = Bool()
-  val valid : Bool = Bool()
+  val ready = Bool()
+  val valid = Bool()
 }
