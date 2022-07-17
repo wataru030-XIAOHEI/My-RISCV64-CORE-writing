@@ -9,7 +9,7 @@ import Const.util._
 class IDecoder {
 
   val table : Array[(BitPat,List[BitPat])]= Array(
-    AUIPC ->  List(U,excADD , PC  ,   ZERO2 , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
+    AUIPC ->  List(U,excADD , PC  ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
     LUI   ->  List(U,excADD , ZERO1,  IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),
 
     ADDI  ->  List(I,excADD , RS1 ,   IMM   , DISEN  , memwenX , WEN  , ALU_OUT ,  CSRX , Valid , BX    ),

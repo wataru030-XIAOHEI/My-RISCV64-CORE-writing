@@ -226,9 +226,9 @@ class Core extends Module with GoParameter{
   io.dmem.wen := ctrlSigsMem.memwen
 //  io.dmem.wdata := storeDataMem
   io.dmem.wdata := MuxLookup(ctrlSigsMem.memwen,storeDataMem,Seq(
-    OneByte ->  Cat(0.U(56.W),storeDataMem( 7,0)),
-    TwoByte ->  Cat(0.U(48.W),storeDataMem(15,0)),
-    FourByte->  Cat(0.U(32.W),storeDataMem(31,0)),
+    OneByte ->  Fill(8,storeDataMem( 7,0)),
+    TwoByte ->  Fill(4,storeDataMem(15,0)),
+    FourByte->  Fill(2,storeDataMem(31,0)),
     EighByte->  storeDataMem
   ))
   io.dmem.addr := alu_resultMem
